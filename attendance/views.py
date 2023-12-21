@@ -228,8 +228,8 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
         for student_data in report_data:
             present_count = student_data.count("P")
             student_data[2] = present_count
-            student_data[0] = f"{
-                round((present_count / total_attendance) * 100, 2)}%"
+            student_data[0] = str(
+                round((present_count / total_attendance) * 100, 2)) + '%'
 
         for i, student in enumerate(student_names):
             report_dict[student] = report_data[i]

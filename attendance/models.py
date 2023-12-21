@@ -16,7 +16,7 @@ class Attendance(models.Model):
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{str(self.att_date)} {self.subject_name}'
+        return str(self.att_date) + ' ' + self.subject_name
 
     @property
     def class_full_name(self):
