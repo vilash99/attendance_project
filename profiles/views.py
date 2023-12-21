@@ -175,3 +175,10 @@ def error_404(request, exception):
     Show 404 error page
     """
     return render(request, 'exception/error404.html')
+
+
+def faq_page(request):
+    """
+    Show FAQ for password
+    """
+    return render(request, 'exception/faq_password.html')

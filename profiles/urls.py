@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (TeacherListView, TeacherDetailView, TeacherCreateView,
                     TeacherUpdateView, StudentListView, StudentDetailView,
-                    StudentCreateView, StudentUpdateView, change_password)
+                    StudentCreateView, StudentUpdateView, change_password,
+                    faq_page)
 
 app_name = 'profiles'
 
@@ -21,4 +22,7 @@ urlpatterns = [
          StudentUpdateView.as_view(), name='student_edit'),
 
     path('change_password/', change_password, name='change_password'),
+    path('faq_page/', faq_page, name='faq_page'),
+
+
 ]
