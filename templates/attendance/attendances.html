@@ -1,0 +1,183 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - All Attendances
+{% endblock title %}
+
+{% block css %}
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+{% endblock css %}
+
+{% block content %}
+<section class="section section-center">
+  <div class="header-separator"></div>
+
+  <div class="section-title">
+    <h2>All attendance</h2>
+  </div>
+
+  <div class="search-form">
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="search-text">Search attendance</label>
+        <input
+            id="search-text"
+            type="text"
+            name="q"
+            placeholder="Subject"/>
+      </div>
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="selected-month">Filter by month</label>
+        <select name="month" id="selected-month">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="submit">
+          Show
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div>
+    {% if total_attend %}
+      {% for record in total_attend %}
+      <p>
+        {% if record.class_name == 'BCA1A' %}
+          BCA I Year (Section A):
+        {% elif record.class_name == 'BCA1B' %}
+          BCA I Year (Section B):
+        {% elif record.class_name == 'BCA2' %}
+          BCA II Year:
+        {% elif record.class_name == 'BCA3' %}
+          BCA Final Year:
+        {% elif record.class_name == 'BSC1' %}
+          BSC I Year:
+        {% elif record.class_name == 'BSC2' %}
+          BSC II Year:
+        {% elif record.class_name == 'BSC3' %}
+          BSC Final Year:
+        {% else %}
+          No Class:
+        {% endif %}
+        <b>{{ record.total_class }}</b>
+      </p>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {% if attendance_list %}
+    <table class="tbl-data detail-view">
+      <tr>
+        <th>Date</th>
+        <th>Teachers</th>
+        <th>Subject</th>
+        <th>Class</th>
+        <th>Unique Code</th>
+        <th>Total Students</th>
+        <th>Active</th>
+      </tr>
+      {% for attendance in attendance_list %}
+      <tr>
+        <td>
+          {{ attendance.att_date }}
+        </td>
+        <td>
+          <a href="{% url 'attendance:attendances_detail' attendance.pk %}">
+            {% for teacher_name in attendance.teacher.all %}
+              {{ teacher_name }},
+            {% endfor %}
+          </a>
+        </td>
+        <td>{{ attendance.subject_name }}</td>
+        <td>{{ attendance.class_full_name }}</td>
+        <td>{{ attendance.unique_code }}</td>
+        <td>{{ attendance.total_students }}</td>
+        {% if attendance.is_active %}
+          <td>
+            <img class="active-icon" src="{% static 'admin/img/icon-yes.svg' %}" alt="icon-yes">
+          </td>
+        {% else %}
+          <td>
+            <img class="active-icon" src="{% static 'admin/img/icon-no.svg' %}" alt="icon-no">
+          </td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </table>
+
+    <br />
+    <div class="pagination">
+      <span class="step-links">
+        {% if page_obj.has_previous %}
+          <a class="btn" href="?page=1&amp;{{ query }}">
+            &laquo; First
+          </a>
+          <a class="btn" href="?page={{ page_obj.previous_page_number }}&amp;{{ query }}">
+            Previous
+          </a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+          <a class="btn" href="?page={{ page_obj.next_page_number }}&amp;{{ query }}">
+            Next
+          </a>
+          <a class="btn" href="?page={{ page_obj.paginator.num_pages }}&amp;{{ query }}">
+            Last &raquo;
+          </a>
+        {% endif %}
+      </span>
+    </div>
+
+  {% else %}
+    <p>No attendances are found!</p>
+  {% endif %}
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Get month name form month number
+    let month_no = $(location).attr('search');
+
+    if(month_no !== '') {
+      // Remove extra text
+      month_no = month_no.replace('?month=', '');
+    }
+    else {
+      let d = new Date();
+      month_no = d.getMonth()+1;
+    }
+    $("#selected-month").val(month_no).change();
+  });
+</script>
+
+{% endblock content %}

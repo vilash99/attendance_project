@@ -1,0 +1,427 @@
+@import "./base.css";
+
+/* Homepage Design */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.hero-content h2,
+.hero-content h1 {
+  color: var(--clr-primary-1);
+}
+
+.hero-content h1 {
+  font-size: 2.5rem;
+  margin-top: 1rem;
+  font-weight: 800;
+}
+
+@media screen and (min-width: 992px) {
+  .hero {
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0.8)
+      ),
+      url("../images/hero.png") center/cover no-repeat;
+  }
+
+  .hero-content h1 {
+    font-size: 4rem;
+  }
+}
+
+
+/* ========== Input fields design ========== */
+select,
+input {
+  font-family: var(--ff-primary);
+  font-size: 1rem;
+  height: 2.25rem;
+  width: 100%;
+  background-color: var(--clr-white);
+  border: 1px solid var(--clr-black);
+  border-radius: var(--border-radius);
+  margin-bottom: 1.25rem;
+}
+
+input {
+  padding: 0 0.3rem;
+}
+
+select {
+  padding: 0.5rem 0.3rem;
+}
+
+.input-label,
+.input-field {
+  margin-bottom: 0.2rem;
+}
+
+
+/* ========== Misc Global CSS ========== */
+.center-align {
+  text-align: center;
+}
+
+.normal-separator {
+  margin-top: 40px;
+}
+
+.normal-separator-20px {
+  margin-top: 20px;
+}
+
+.hr-line {
+  margin: 1rem 0;
+  border: 1px solid var(--clr-light-grey);
+}
+
+.hidden-field {
+  display: none;
+}
+
+.danger-text {
+  color: var(--clr-danger);
+  font-weight: bold;
+}
+
+/* ========== Button Designs ========== */
+.btn {
+  font-family: var(--ff-primary);
+  text-transform: capitalize;
+  padding: 0.5rem 1.25rem;
+  margin-bottom: 1.25rem;
+  display: inline-block;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn:hover {
+  box-shadow: var(--dark-shadow);
+}
+
+.btn-primary {
+  background-color: var(--clr-main);
+  color: var(--clr-white);
+}
+
+.btn-normal {
+  background-color: var(--clr-normal);
+  color: var(--clr-white);
+}
+
+.btn-success {
+  background-color: var(--clr-success);
+  color: var(--clr-white);
+}
+
+.btn-danger {
+  background-color: var(--clr-danger);
+  color: var(--clr-white);
+}
+
+.inside-container .btn-primary {
+  width: 100%;
+}
+
+/* Error container design */
+ul.errorlist {
+  list-style: none;
+
+  /*Alert box */
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+
+  /*Alert danger */
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-info {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius);
+
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+/* ========== Tables design ========== */
+.tbl-data,
+.tbl-details {
+  margin-top: 10px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.tbl-data tr td,
+.tbl-data tr th {
+  padding: 10px;
+  border: 1px solid var(--clr-light-grey);
+}
+
+.tbl-data tr th {
+  text-align: left;
+  background-color: var(--clr-dark-blue);
+  color: var(--clr-white);
+}
+
+.tbl-data tr:nth-child(even) {
+  background-color: #f8f6ff;
+}
+
+.tbl-data .btn {
+  margin-bottom: 0;
+}
+
+.tbl-details tr {
+  border-bottom: 1px solid var(--clr-light-grey);
+}
+
+.tbl-details tr td {
+  padding: 10px;
+}
+
+
+/* ========== Search Form ========== */
+.search-form {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.flex-contents {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-field select {
+  width: 200px;
+}
+
+@media screen and (min-width: 992px) {
+  .search-form {
+    flex-direction: row;
+  }
+}
+
+
+/* ========== Classes, Teachers Page ========== */
+.class-box {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--dark-shadow);
+}
+
+.box-heading {
+  text-transform: uppercase;
+  padding: 0.7rem;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+}
+
+.blue-box {
+  border: 2px solid var(--clr-primary-3);
+}
+
+.blue-heading {
+  background-color: var(--clr-primary-3);
+  color: var(--clr-white);
+}
+
+.box-content {
+  padding: 1rem;
+}
+
+.box-content .btn {
+  margin-left: 0.5rem;
+}
+
+
+/* ========== Active Attendance ========== */
+.attendance-status {
+  padding: 0.5rem 0;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--clr-light-grey);
+  border-bottom: 1px solid var(--clr-light-grey);
+}
+
+.attendance-status .first-card {
+  flex: 40%;
+  border-right: 1px solid var(--clr-light-grey);
+  padding-right: 0.5rem;
+}
+
+.attendance-status .btn-success {
+  padding: 0.5rem 2rem;
+}
+
+.attendance-status .card-flex {
+  padding-left: 0.5rem;
+  flex: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-count {
+  text-align: center;
+}
+
+.status-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--clr-danger);
+}
+
+.status-label {
+  color: darkgray;
+}
+
+.input-icons {
+  width: 100%;
+  color: darkgray;
+  position: relative;
+}
+
+.input-icons i {
+  position: absolute;
+}
+
+.icon {
+  padding: 10px;
+  min-width: 40px;
+}
+
+.search-textfield {
+  padding-left: 2rem;
+}
+
+/* Show all attendance */
+.active-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* ========== Student Attendance Page, Success Page ========== */
+.global-header {
+  padding: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.change-password-container {
+  display: none;
+  background-color: #ffe4c4;
+  padding: 0.725rem;
+}
+
+.show-container {
+  display: block;
+}
+
+#id_change_pass {
+  display: block;
+  margin-bottom: 1.25rem;
+  text-align: right;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--clr-main);
+}
+
+.success-para,
+.error-para {
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.error-para {
+  color: var(--clr-danger);
+}
+
+.success-para {
+  color: var(--clr-success);
+}
+
+.highlight-password {
+  padding: 0.75rem 1rem;
+  background-color: var(--clr-success);
+  color: yellow;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+#success-message {
+  font-weight: 700;
+  color: blue;
+}
+
+/* ========== Student Success Page ========== */
+.success-container {
+  text-align: center;
+}
+
+.attendance-success-logo {
+  display: inline-block;
+  width: 4.5rem;
+  height: 4.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.attendance-success-text {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+/* ========== Show Ads ========== */
+.golden-box {
+  border: 2px solid gold;
+  margin-bottom: 0;
+}
+
+.golden-heading {
+  background-color: gold;
+  color: var(--clr-black);
+}
+
+.ads-title {
+  font-weight: 600;
+  text-align: left;
+}

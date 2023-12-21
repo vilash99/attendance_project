@@ -1,0 +1,46 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - All Teachers
+{% endblock title %}
+
+{% block content %}
+<section class="section section-center">
+  <div class="section-title">
+    <h2>All teachers</h2>
+  </div>
+
+  {% if user.is_superuser %}
+    <a class="btn btn-primary" href="{% url 'profiles:teacher_new' %}">
+      Add Teacher
+    </a>
+  {% endif %}
+
+  {% if teacher_list %}
+    <table class="tbl-data">
+      <tr>
+        <th>Teacher name</th>
+        <th></th>
+      </tr>
+      {% for teacher in teacher_list %}
+        <tr>
+          <td>
+            <a href="{% url 'profiles:teacher_detail' teacher.pk %}">
+              <b>{{ teacher.name }}</b>
+            </a>
+          </td>
+          <td class="center-align">
+            <a href="{% url 'profiles:teacher_edit' teacher.pk %}">
+              <i class="fas fa-edit"></i>
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No teachers are found!</p>
+  {% endif %}
+</section>
+{% endblock content %}

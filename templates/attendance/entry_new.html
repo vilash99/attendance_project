@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>OAS - Student Attendance</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+  </head>
+
+  <body>
+    <header class="navbar global-header">
+      <a href="#">
+        <img class="nav-logo" src="{% static 'images/logo.png' %}" alt="online-attendance-system"/>
+      </a>
+    </header>
+
+    <section class="section section-center">
+      <div class="inside-container">
+        <div class="section-title">
+          <h2>Attendance page</h2>
+        </div>
+
+        {% if not_active %}
+          <div class="alert-info" role="alert">{{ not_active }}</div>
+
+          <hr class="hr-line" />
+
+          <div class="class-box golden-box">
+            <div class="box-heading golden-heading">important study material</div>
+            <div class="box-content">
+              {% if ads %}
+                <a href="{{ads.ads_url}}" target="_blank">
+                  <h3 class="ads-title">{{ads.title}}</h3>
+                  <br />
+                  <img
+                    style="width: 100%" src="{{ads.image_url}}" alt="{{ads.title}}"/>
+                </a>
+              {% endif %}
+            </div>
+          </div>
+        {% endif %}
+
+        {% if attendance %}
+          <table class="tbl-details">
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <tr>
+              <td>Date</td>
+              <td><b>{{ attendance.att_date }}</b></td>
+            </tr>
+
+            <tr>
+              <td>Class name</td>
+              <td><b>{{ attendance.class_full_name }}</b></td>
+            </tr>
+
+            <tr>
+              <td>Teachers name</td>
+              <td><b>
+                {% for teacher_name in attendance.teacher.all %}
+                  {{ teacher_name}}<br />
+                {% endfor %}
+                </b>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Subject name</td>
+              <td><b>{{ attendance.subject_name }}</b></td>
+            </tr>
+          </table>
+
+          <div class="normal-separator-20px"></div>
+
+          <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary" type="submit">
+              Present
+            </button>
+          </form>
+
+          <a id="id_change_pass">Change Password</a>
+
+          <div class="change-password-container">
+            <p class="input-label">Old password</p>
+            <p class="input-field">
+              <input type="password" name="old_pass" id="old_pass" />
+            </p>
+
+            <p class="input-label">New password</p>
+            <p class="input-field">
+              <input type="password" name="new_pass" id="new_pass" />
+            </p>
+
+            <p class="input-label">Confirm password</p>
+            <p class="input-field">
+              <input type="password" name="confirm_pass" id="confirm_pass" />
+            </p>
+
+            <input type="checkbox" onclick="showHidePassword()" style="width: 20px;height: 20px;margin-right: 0.5rem;">Show Password
+
+            <p id="pass-change-response"></p>
+            <p id="new-password"></p>
+            <p id="success-message"></p>
+            <br />
+
+            <a id="btn-change-password" class="btn btn-danger">
+              Change Password
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2022-23 Prof. Vilash D. Daate</p>
+    </footer>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        // Show/Hide Change Password container
+        $("#id_change_pass").on("click", function () {
+          $(".change-password-container").toggleClass("show-container");
+        });
+
+        // Change password method
+        $("#btn-change-password").on("click", function () {
+          //Check if new password and confirm password is same
+          let old_pass = $("#old_pass").val();
+          let new_pass = $("#new_pass").val();
+          let confirm_pass = $("#confirm_pass").val();
+          let student_id = $("#id_student option:selected").attr("value");
+
+          // Check if student is selected from list
+          if (student_id == "") {
+            alert("Please select your name form list to change password.");
+          }
+          //Check if password is not empty
+          else if (old_pass == "" || new_pass == "" || confirm_pass == "") {
+            alert("Please enter password to change.");
+          } else if (new_pass != confirm_pass) {
+            alert("New password and confirm password is not matched!");
+          } else if (old_pass == new_pass) {
+            alert("Old password and new password is same!");
+          } else {
+            $.ajax({
+              url: "{% url 'profiles:change_password' %}",
+              type: "GET",
+              data: {
+                student_id: student_id,
+                old_pass: old_pass,
+                new_pass: new_pass,
+              },
+            }).done(function (response) {
+              $("#pass-change-response").text(response.message_txt);
+              if (response.status == "success") {
+                $("#pass-change-response").removeClass("error-para");
+                $("#pass-change-response").addClass("success-para");
+                $("#new-password").text(new_pass);
+                $("#new-password").addClass("highlight-password");
+                $("#success-message").text("Take SCREENSHOT of this page to remember PASSWORD and SAVE it in your phone gallery.");
+              } else {
+                $("#pass-change-response").removeClass("success-para");
+                $("#pass-change-response").addClass("error-para");
+              }
+
+              $("#old_pass").val("");
+              $("#new_pass").val("");
+              $("#confirm_pass").val("");
+            });
+          }
+        });
+      });
+    </script>
+
+    <script>
+      function showHidePassword() {
+        var x = document.getElementById("old_pass");
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+
+        var y = document.getElementById("new_pass");
+        if (y.type === "password") {
+          y.type = "text";
+        } else {
+          y.type = "password";
+        }
+
+        var z = document.getElementById("confirm_pass");
+        if (z.type === "password") {
+          z.type = "text";
+        } else {
+          z.type = "password";
+        }
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,205 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - Attendance
+{% endblock title %}
+
+{% block css %}
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+{% endblock css %}
+
+{% block content %}
+<section class="section section-center">
+  <div class="inside-container">
+    <div class="section-title">
+      <h2>Active attendance</h2>
+    </div>
+
+    {% if attendance %}
+    <table class="tbl-details">
+      <tr>
+        <td></td>
+        <td>
+          {% if attendance.is_active %}
+            <a id="btnEnd" class="btn btn-danger" data-id="{{attendance.id}}">
+              End Attendance
+            </a>
+          {% endif %}
+        </td>
+      </tr>
+
+      <tr>
+        <td>Date</td>
+        <td><b>{{ attendance.att_date }}</b></td>
+      </tr>
+
+      <tr>
+        <td>Class name</td>
+        <td><b>{{ attendance.get_class_name_display }}</b></td>
+      </tr>
+
+      <tr>
+        <td>Teachers name</td>
+        <td>
+          <b>
+          {% for teacher_name in attendance.teacher.all %}
+            {{ teacher_name }}<br />
+          {% endfor %}
+          </b>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Subject name</td>
+        <td><b>{{ attendance.subject_name }}</b></td>
+      </tr>
+
+      <tr>
+        <td>Total students</td>
+        <td><b>{{ attendance.total_students }}</b></td>
+      </tr>
+
+      <tr>
+        <td>Unique code</td>
+        <td><b>{{ attendance.unique_code }}</b></td>
+      </tr>
+    </table>
+    {% else %}
+      <p>No attendance is found for current id!</p>
+    {% endif %}
+
+    <div class="normal-separator-20px"></div>
+
+    <div class="section-title">
+      <h2>Attendance status</h2>
+    </div>
+
+    <div class="attendance-status">
+      <div class="first-card">
+        <a id="btnUpdateCount" class="btn btn-success">
+          Refresh
+        </a>
+      </div>
+
+      <div class="card-flex">
+        <div class="status-count">
+          <div class="status-value">{{ total_count }}</div>
+          <div class="status-label">REPLIED</div>
+        </div>
+
+        <div class="status-label">OF</div>
+
+        <div class="status-count">
+          {% if attendance %}
+            <div class="status-value">{{ attendance.total_students }}</div>
+          {% else %}
+            <div class="status-value">--</div>
+          {% endif %}
+          <div class="status-label">TOTAL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-icons">
+      <i class="fas fa-search icon"></i>
+      <input type="search" class="search-textfield" name="search-names" id="search-names"
+        oninput="filterName()" placeholder="Search student name"/>
+    </div>
+
+    <table class="tbl-data" id="std-table">
+      {% if entries %}
+        <tr>
+          <th style="width: 75%">Student Name</th>
+          <th>Action</th>
+        </tr>
+
+        {% for item in entries %}
+          <tr>
+            <td>{{ item.student }}</td>
+            <td>
+              {% if attendance.is_active %}
+                <a class="btn btn-danger blacklist-student"
+                data-id="{{item.id}}">
+                  BlackList
+                </a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <p>No attendance by students!</p>
+      {% endif %}
+    </table>
+  </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      // Refresh Page
+      $("#btnUpdateCount").on("click", function () {
+        location.reload();
+      });
+
+      // End Attendance
+      $("#btnEnd").on("click", function () {
+        let att_id = $("#btnEnd").attr("data-id");
+
+        if (att_id != "") {
+          $.ajax({
+            url: "{% url 'attendance:end_attendance' %}",
+            type: "GET",
+            data: {
+              att_id: att_id,
+            },
+          }).done(function (response) {
+            location.reload();
+          });
+        }
+      });
+
+      // BlackList Students
+      $(".blacklist-student").on("click", function () {
+        let entry_id = $(this).attr("data-id");
+
+        if (entry_id != "") {
+          $.ajax({
+            url: "{% url 'blacklisted:blacklist_student' %}",
+            type: "GET",
+            data: {
+              entry_id: entry_id,
+            },
+          }).done(function (response) {
+            location.reload();
+          });
+        }
+      });
+
+    });
+  </script>
+
+  <script type="text/javascript">
+    function filterName() {
+      let searchKey = document.getElementById("search-names").value;
+      searchKey = searchKey.toLowerCase();
+
+      let myTable = document.getElementById("std-table");
+      let cellData;
+
+      for (var i = 1, row; (row = myTable.rows[i]); i++) {
+        cellData = row.cells[0].innerText;
+        cellData = cellData.toLowerCase();
+
+        if (searchKey == "") {
+          row.classList.remove("hidden-field");
+        } else if (cellData.search(searchKey) >= 0) {
+          row.classList.remove("hidden-field");
+        } else {
+          row.classList.remove("hidden-field");
+          row.classList.add("hidden-field");
+        }
+      }
+    }
+  </script>
+{% endblock content %}
