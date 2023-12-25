@@ -13,6 +13,3 @@ credentials.txt
 
 # Admin CSS
 static/admin/
-
-# Temporary migratinos blocked
-migrations/
