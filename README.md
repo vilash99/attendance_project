@@ -31,52 +31,52 @@ Then go to the browser and enter the url **http://127.0.0.1:8000/**
 
 ## Features
 
-### Manage Students:
+### 1. Manage Students:
 Add/Edit students with fields such as Name, Class, and Password.
 
 ![students](screenshots/students.png)
 
-### Manage Teachers
+### 2. Manage Teachers
 Add/Edit teachers with their names.
 
 ![teachers](screenshots/teachers.png)
 
-### Initiate Attendance
+### 3. Initiate Attendance
 Start attendance for any class by clicking the provided button.
 
 ![classes](screenshots/classes.png)
 
-###  Attendance Input
+###  4. Attendance Input
 Input attendance details, including Teacher's name, subject name, class unique code, and total students present.
 
 ![start_attendance](screenshots/start_attendance.png)
 
-### Monitor Active Attendance
+### 5. Monitor Active Attendance
 Check the status of active attendance and view the count of students who have marked their attendance.
 
-### End Attendance
+### 6. End Attendance
 Teachers can end attendance when the attendance session is complete.
 
-### Class-Specific URLs
+### 7. Class-Specific URLs
 Each class has a separate URL. Students can mark their attendance by selecting their name, entering their password, and using the unique code provided by the teacher. If there is no attendance is active for given class, then page with no attendance will appear.
 
-### Blacklist Students
+### 8. Blacklist Students
 Option to blacklist students who attempt to mark attendance falsely.
 
-### Detailed Attendance Reports
+### 9. Detailed Attendance Reports
 View detailed attendance reports for each student and all students in a given class.
 
 ![report](screenshots/report.png)
 
-### Search and Filter Options
+### 10. Search and Filter Options
 Search for student names and filter attendance reports by month.
 
-### Class Reports
+### 11. Class Reports
 Teachers can view class reports, including the number of classes taken. Reports can be filtered by month.
 
 ![attendance-report](screenshots/attendance-report.png)
 
-### Password Protection
+### 12. Password Protection
 All pages are password-protected and cannot be accessed publicly. Student attendance pages are accessible only when the teacher initiates attendance for a specific class.
 
 ## Contribution
@@ -85,7 +85,7 @@ Feel free to contribute to the project by submitting bug reports, feature reques
 ## License
 This project is licensed under the MIT License.
 
-
+## Contact me
 If you need any web app similar to this or have new requirements. You can contact me at **vilashdd[at]gmail[com].**
 
 My website: https://vilashdaate.com/
