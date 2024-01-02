@@ -196,10 +196,13 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
             .order_by('name')
         )
 
+        # Convert to list
+        all_students = [student.name for student in all_students]
+
         # Create attendance dictionary
         report_dict = {}
         for student in all_students:
-            report_dict[student.name] = [
+            report_dict[student] = [
                 '0%', total_attendance, 0] + ["A"] * total_attendance
 
         # if there is no attendance, then return student name
@@ -207,21 +210,17 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
             context['report_dict'] = report_dict
             return context
 
-        student_names = [
-            entry.student.name for entry in attendance_list.first().entry_set.all()
-        ]
-
         report_data = [
             # Initial values for each student
             [0, total_attendance, 0] + ["A"] * total_attendance
-            for _ in student_names
+            for _ in all_students
         ]
 
         for i, attendance in enumerate(attendance_list):
             present_students = attendance.entry_set.values_list(
                 'student__name', flat=True)
 
-            for j, name in enumerate(student_names):
+            for j, name in enumerate(all_students):
                 report_data[j][3 +
                                i] = "P" if name in present_students else "A"
 
@@ -231,7 +230,7 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
             student_data[0] = str(
                 round((present_count / total_attendance) * 100, 2)) + '%'
 
-        for i, student in enumerate(student_names):
+        for i, student in enumerate(all_students):
             report_dict[student] = report_data[i]
 
         context['attendance_list'] = attendance_list
