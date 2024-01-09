@@ -11,6 +11,7 @@
     <title>OAS - Student Attendance</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   </head>
 
   <body>
@@ -109,8 +110,10 @@
 
             <input type="checkbox" onclick="showHidePassword()" style="width: 20px;height: 20px;margin-right: 0.5rem;">Show Password
 
-            <p id="pass-change-response"></p>
-            <p id="new-password"></p>
+            <span id="password-screenshot">
+              <p id="pass-change-response"></p>
+              <p id="new-password"></p>
+            </span>
             <p id="success-message"></p>
             <br />
 
@@ -172,7 +175,8 @@
                 $("#pass-change-response").addClass("success-para");
                 $("#new-password").text(new_pass);
                 $("#new-password").addClass("highlight-password");
-                $("#success-message").text("Take SCREENSHOT of this page to remember PASSWORD and SAVE it in your phone gallery.");
+                $("#success-message").text("The password screenshot will be downloaded. Click on DOWNLOAD FILE to Save.");
+                takeScreenshot();
               } else {
                 $("#pass-change-response").removeClass("success-para");
                 $("#pass-change-response").addClass("error-para");
@@ -209,6 +213,18 @@
         } else {
           z.type = "password";
         }
+      }
+
+      function takeScreenshot() {
+        const divElement = document.querySelector('#password-screenshot');
+
+        html2canvas(divElement).then((canvas) => {
+          const imgData = canvas.toDataURL('image/png');
+          const link = document.createElement('a');
+          link.href = imgData;
+          link.download = 'my-password.png';
+          link.click();
+        });
       }
     </script>
 
