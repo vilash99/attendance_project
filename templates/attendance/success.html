@@ -1,56 +1,36 @@
-<!DOCTYPE html>
-
+{% extends 'base_public.html' %}
 {% load static %}
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+{% block title %}Attendance Success% endblock title %}
 
-    <title>OAS - Success Attendance</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
-  </head>
+{% block content %}
+  <section class="section section-center">
+    <div class="inside-container">
+      <div class="success-container">
+        <img src="{% static 'images/attendance-success.png' %}" alt="attendance-success" class="attendance-success-logo"/>
 
-  <body>
-    <header class="navbar global-header">
-      <a href="#">
-        <img class="nav-logo" src="{% static 'images/logo.png' %}" alt="online-attendance-system"/>
-      </a>
-    </header>
+        <p class="attendance-success-text">
+          Your attendance has been recorded successfully!
+          <br />
+          You can now safely close this page.
+        </p>
+      </div>
 
-    <section class="section section-center">
-      <div class="inside-container">
-        <div class="success-container">
-          <img src="{% static 'images/attendance-success.png' %}" alt="attendance-success" class="attendance-success-logo"/>
+      <hr class="hr-line" />
 
-          <p class="attendance-success-text">
-            Your attendance has been recorded successfully!
-            <br />
-            You can now safely close this page.
-          </p>
-        </div>
-
-        <hr class="hr-line" />
-
-        <div class="class-box golden-box">
-          <div class="box-heading golden-heading">important study material</div>
-          <div class="box-content">
-            {% if ads %}
-              <a href="{{ads.ads_url}}" target="_blank">
-                <h3 class="ads-title">{{ads.title}}</h3>
-                <br />
-                <img
-                  style="width: 100%" src="{{ads.image_url}}" alt="{{ads.title}}"/>
-              </a>
-              {% endif %}
-          </div>
+      <div class="class-box golden-box">
+        <div class="box-heading golden-heading">important study material</div>
+        <div class="box-content">
+          {% if ads %}
+            <a href="{{ads.ads_url}}" target="_blank">
+              <h3 class="ads-title">{{ads.title}}</h3>
+              <br />
+              <img
+                style="width: 100%" src="{{ads.image_url}}" alt="{{ads.title}}"/>
+            </a>
+            {% endif %}
         </div>
       </div>
-    </section>
-
-    <footer class="footer">
-      <p>&copy; 2022-23 Prof. Vilash D. Daate</p>
-    </footer>
-  </body>
-</html>
+    </div>
+  </section>
+{% endblock content %}

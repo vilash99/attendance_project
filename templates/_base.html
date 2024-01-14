@@ -4,14 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>
-    OAS
-    {% block title %}
-    {% endblock title%}
-  </title>
+  <title>OAS {% block title %}{% endblock title%}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
-
   {% block css %}
   {% endblock css %}
 </head>
@@ -50,7 +45,7 @@
   {% endblock content %}
 
   <footer class="footer">
-    <p class="footer-text">&copy; 2022-23 Prof. Vilash D. Daate</p>
+    <p class="footer-text">&copy; 2022-2024 Prof. Vilash D. Daate</p>
   </footer>
 
   <script src="{% static 'js/base.js' %}"></script>
