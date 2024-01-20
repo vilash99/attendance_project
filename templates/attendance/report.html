@@ -37,6 +37,8 @@
           <option value="BSC1">BSC I Year</option>
           <option value="BSC2">BSC II Year</option>
           <option value="BSC3">BSC Final Year</option>
+          <option value="MSC1">MSC I Year</option>
+          <option value="MSC2">MSC Final Year</option>
           <option value="NONE">Not Available</option>
         </select>
       </div>
@@ -119,9 +121,14 @@
     {% if report_dict %}
       {% for key, value in report_dict.items %}
         <tr>
-          <td style="min-width: 270px"><b>{{ key }}</b></td>
+          <td style="min-width: 270px"><b>
+              <a href="{% url 'profiles:student_detail' value.0 %}" class="underline-me">
+                {{ key }}
+              </a>
+            </b>
+          </td>
 
-          {% for item in value %}
+          {% for item in value|slice:"1:" %}
             <td style="text-align: center; min-width: 100px">{{ item }}</td>
           {% endfor %}
         </tr>

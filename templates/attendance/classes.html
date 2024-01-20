@@ -76,5 +76,33 @@
         {% endfor %}
       {% endif %}
     </div>
+  </div>
+
+  <div class="class-box blue-box">
+    <div class="box-heading blue-heading">MSC</div>
+    <div class="box-content">
+      <a href="{% url 'attendance:attendances_new' %}?class=MSC1" class="btn btn-normal">
+        MSC I Year
+      </a>
+      <a href="{% url 'attendance:attendances_new' %}?class=MSC2" class="btn btn-normal">
+        MSC Final Year
+      </a>
+
+      {% if active_msc %}
+        <hr class="hr-line" />
+        <h4 class="danger-text">
+          Below classes attendance is still ACTIVE. Please click on class if you accidentally closed attendance page.
+        </h4>
+        <br />
+
+        {% for item in active_bsc %}
+          <a href="{% url 'attendance:attendances_detail' item.pk %}"
+          class="btn btn-danger">
+            {{item.class_full_name}}
+          </a>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
 </section>
 {% endblock content %}

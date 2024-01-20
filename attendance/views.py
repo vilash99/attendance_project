@@ -29,9 +29,12 @@ class ClassesView(LoginRequiredMixin, TemplateView):
             Q(class_name__contains='BCA') & Q(is_active=True)).order_by('class_name')
         active_bsc = Attendance.objects.filter(
             Q(class_name__contains='BSC') & Q(is_active=True)).order_by('class_name')
+        active_msc = Attendance.objects.filter(
+            Q(class_name__contains='MSC') & Q(is_active=True)).order_by('class_name')
 
         context['active_bca'] = active_bca
         context['active_bsc'] = active_bsc
+        context['active_msc'] = active_msc
 
         return context
 
@@ -197,13 +200,13 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
         )
 
         # Convert to list
-        all_students = [student.name for student in all_students]
+        all_students = [(student.name, student.pk) for student in all_students]
 
         # Create attendance dictionary
         report_dict = {}
-        for student in all_students:
+        for student, s_id in all_students:
             report_dict[student] = [
-                '0%', total_attendance, 0] + ["A"] * total_attendance
+                s_id, '0%', total_attendance, 0] + ["A"] * total_attendance
 
         # if there is no attendance, then return student name
         if not attendance_list:
@@ -212,8 +215,8 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
 
         report_data = [
             # Initial values for each student
-            [0, total_attendance, 0] + ["A"] * total_attendance
-            for _ in all_students
+            [s_id, 0, total_attendance, 0] + ["A"] * total_attendance
+            for _, s_id in all_students
         ]
 
         for i, attendance in enumerate(attendance_list):
@@ -221,16 +224,16 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
                 'student__name', flat=True)
 
             for j, name in enumerate(all_students):
-                report_data[j][3 +
+                report_data[j][4 +
                                i] = "P" if name in present_students else "A"
 
         for student_data in report_data:
             present_count = student_data.count("P")
-            student_data[2] = present_count
-            student_data[0] = str(
+            student_data[3] = present_count
+            student_data[1] = str(
                 round((present_count / total_attendance) * 100, 2)) + '%'
 
-        for i, student in enumerate(all_students):
+        for i, (student, s_id) in enumerate(all_students):
             report_dict[student] = report_data[i]
 
         context['attendance_list'] = attendance_list

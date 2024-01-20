@@ -393,6 +393,11 @@ ul.errorlist {
   color: blue;
 }
 
+
+.underline-me {
+  text-decoration: underline;
+}
+
 /* ========== Student Success Page ========== */
 .success-container {
   text-align: center;

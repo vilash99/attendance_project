@@ -1,4 +1,4 @@
-CLASS_NAMES = [
+CLASS_NAMES = (
     ('NO_CLASS', 'No Class Selected'),
     ('BCA1A', 'BCA I Year (Section A)'),
     ('BCA1B', 'BCA I Year (Section B)'),
@@ -7,9 +7,11 @@ CLASS_NAMES = [
     ('BSC1', 'BSC I Year'),
     ('BSC2', 'BSC II Year'),
     ('BSC3', 'BSC Final Year'),
-]
+    ('MSC1', 'MSC I Year'),
+    ('MSC2', 'MSC Final Year'),
+)
 
-BCA_I_YEAR = [
+BCA_I_YEAR = (
     # Odd Semester papers
     # ('Computer Fundamentals', 'Computer Fundamentals'),
     # ('C Programming', 'C Programming'),
@@ -32,9 +34,9 @@ BCA_I_YEAR = [
 
     ('English', 'English'),
     ('Hindi', 'Hindi'),
-]
+)
 
-BCA_II_YEAR = [
+BCA_II_YEAR = (
     # Odd Semester papers
     # ('Visual Basic Programming', 'Visual Basic Programming'),
     # ('Data Base Management System', 'Data Base Management System'),
@@ -54,9 +56,9 @@ BCA_II_YEAR = [
     ('Practical I', 'Practical I'),
     ('Practical II', 'Practical II'),
     ('Practical III', 'Practical III'),
-]
+)
 
-BCA_FINAL_YEAR = [
+BCA_FINAL_YEAR = (
     # Odd Semester papers
     # ('Computer Graphics - I', 'Computer Graphics - I'),
     # ('Compiler Construction', 'Compiler Construction'),
@@ -76,9 +78,9 @@ BCA_FINAL_YEAR = [
     ('Practical I', 'Practical I'),
     ('Practical II', 'Practical II'),
     ('Practical III', 'Practical III'),
-]
+)
 
-BSC_I_YEAR = [
+BSC_I_YEAR = (
     # Odd Semester papers
     # ('Programming in C', 'Programming in C'),
     # ('Fundamentals of IT', 'Fundamentals of IT'),
@@ -86,9 +88,9 @@ BSC_I_YEAR = [
     # Even Semester papers
     ('Programming In C++', 'Programming In C++'),
     ('System Analysis and Design', 'System Analysis and Design'),
-]
+)
 
-BSC_II_YEAR = [
+BSC_II_YEAR = (
     # Odd Semester papers
     # ('Data Structures', 'Data Structures'),
     # ('Operating Systems', 'Operating Systems'),
@@ -96,9 +98,9 @@ BSC_II_YEAR = [
     # Even Semester papers
     ('Java Programming', 'Java Programming'),
     ('Linux Operating System', 'Linux Operating System'),
-]
+)
 
-BSC_FINAL_YEAR = [
+BSC_FINAL_YEAR = (
     # Odd Semester papers
     # ('Visual Basic Programming', 'Visual Basic Programming'),
     # ('Database Management System', 'Database Management System'),
@@ -106,7 +108,40 @@ BSC_FINAL_YEAR = [
     # Even Semester papers
     ('Compiler Construction', 'Compiler Construction'),
     ('SQL AND PL/SQL', 'SQL AND PL/SQL'),
-]
+)
+
+MSC_I_YEAR = (
+    # Odd Semester papers
+    # ('Artificial Intelligence', 'Artificial Intelligence'),
+    # ('Compiler Constructions', 'Compiler Construction'),
+    # ('Discrete Mathematics', 'Discrete Mathematics'),
+    # ('Research Methodology', 'Research Methodology'),
+
+    # Even Semester papers
+    ('Cloud Computing', 'Cloud Computing'),
+    ('Machine Learning', 'Machine Learning'),
+    ('MOOC Course', 'MOOC Course'),
+    ('Apprenticeship/Mini Project', 'Apprenticeship/Mini Project'),
+    ('Practical I', 'Practical I'),
+    ('Practical II', 'Practical II'),
+)
+
+MSC_FINAL_YEAR = (
+    # Odd Semester papers
+    # ('Advanced Software Engineering', 'Advanced Software Engineering'),
+    # ('Network Security', 'Network Security'),
+    # ('Digital Image Processing', 'Digital Image Processing'),
+    # ('MOOC Course', 'MOOC Course'),
+    # ('Research Project/Dissertation', 'Research Project/Dissertation'),
+    # ('Practical', 'Practical'),
+
+    # Even Semester papers
+    ('Big Data Analytics', 'Big Data Analytics'),
+    ('Computer Vision', 'Computer Vision'),
+    ('Deep Learning', 'Deep Learning'),
+    ('Design and Analysis of Algorithm', 'Design and Analysis of Algorithm'),
+    ('Research Project/Dissertation', 'Research Project/Dissertation'),
+)
 
 
 def get_class(tmp_cls):
@@ -135,5 +170,9 @@ def get_subjects(class_name):
         return BSC_II_YEAR
     elif class_name == 'BSC3':
         return BSC_FINAL_YEAR
+    elif class_name == 'MSC1':
+        return MSC_I_YEAR
+    elif class_name == 'MSC2':
+        return MSC_FINAL_YEAR
     else:
         return []
