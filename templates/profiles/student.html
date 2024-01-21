@@ -69,31 +69,7 @@
     </table>
 
     <br />
-    <div class="pagination">
-      <span class="step-links">
-        {% if page_obj.has_previous %}
-          <a class="btn" href="?page=1&amp;{{ query }}">
-            &laquo; First
-          </a>
-          <a class="btn" href="?page={{ page_obj.previous_page_number }}&amp;{{ query }}">
-            Previous
-          </a>
-        {% endif %}
-
-        <span class="current">
-          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
-        </span>
-
-        {% if page_obj.has_next %}
-          <a class="btn" href="?page={{ page_obj.next_page_number }}&amp;{{ query }}">
-            Next
-          </a>
-          <a class="btn" href="?page={{ page_obj.paginator.num_pages }}&amp;{{ query }}">
-            Last &raquo;
-          </a>
-        {% endif %}
-      </span>
-    </div>
+    {% include "includes/pagination.html" %}
   {% else %}
     <p>No students are found!</p>
   {% endif %}

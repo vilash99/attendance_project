@@ -223,7 +223,7 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
             present_students = attendance.entry_set.values_list(
                 'student__name', flat=True)
 
-            for j, name in enumerate(all_students):
+            for j, (name, s_id) in enumerate(all_students):
                 report_data[j][4 +
                                i] = "P" if name in present_students else "A"
 
