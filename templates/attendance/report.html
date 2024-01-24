@@ -108,9 +108,7 @@
           <th>
             [{{ item.att_date }}]
             [
-            {% for teacher_name in item.teacher.all %}
-              {{ teacher_name }} |
-            {% endfor %}
+              {{ item.teacher.all|join:" | " }}
             ]
             {{ item.subject_name }}
           </th>
