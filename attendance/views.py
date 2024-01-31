@@ -94,10 +94,8 @@ class AttendanceDetailView(LoginRequiredMixin, DetailView):
         # Get all students from entry table
         entries = Entry.objects.filter(
             Q(attendance=self.kwargs.get('pk'))).order_by('-id')
-        total_count = len(entries)
 
         context['entries'] = entries
-        context['total_count'] = total_count
         return context
 
 

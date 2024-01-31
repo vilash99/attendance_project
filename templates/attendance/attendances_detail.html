@@ -85,7 +85,7 @@
 
       <div class="card-flex">
         <div class="status-count">
-          <div class="status-value">{{ total_count }}</div>
+          <div class="status-value">{{ entries|length }}</div>
           <div class="status-label">REPLIED</div>
         </div>
 
@@ -124,8 +124,7 @@
             </td>
             <td>
               {% if attendance.is_active %}
-                <a class="btn btn-danger blacklist-student"
-                data-id="{{item.id}}">
+                <a href="{% url 'blacklisted:blacklist_student' item.id item.student.pk item.attendance.id %}" class="btn btn-danger">
                   BlackList
                 </a>
               {% endif %}
@@ -156,23 +155,6 @@
             type: "GET",
             data: {
               att_id: att_id,
-            },
-          }).done(function (response) {
-            location.reload();
-          });
-        }
-      });
-
-      // BlackList Students
-      $(".blacklist-student").on("click", function () {
-        let entry_id = $(this).attr("data-id");
-
-        if (entry_id != "") {
-          $.ajax({
-            url: "{% url 'blacklisted:blacklist_student' %}",
-            type: "GET",
-            data: {
-              entry_id: entry_id,
             },
           }).done(function (response) {
             location.reload();
