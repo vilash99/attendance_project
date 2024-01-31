@@ -1,0 +1,15 @@
+# Virtual Environment
+.attendance_venv/
+
+# Environment variable
+.env
+
+__pycache__/
+
+# database
+*.sqlite3
+
+credentials.txt
+
+# Admin CSS
+static/admin/

@@ -1,0 +1,77 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - All Students
+{% endblock title %}
+
+{% block content %}
+<section class="section section-center">
+  <div class="section-title">
+    <h2>All students</h2>
+  </div>
+
+  {% if user.is_superuser %}
+    <a class="btn btn-primary" href="{% url 'profiles:student_new' %}">
+      Add Student
+    </a>
+  {% endif %}
+
+  <div class="search-form">
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="search-text">Search students</label>
+        <input
+            id="search-text"
+            type="text"
+            name="q"
+            placeholder="Student name"/>
+      </div>
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="submit">
+          Search
+        </button>
+      </div>
+    </form>
+  </div>
+
+  {% if student_list %}
+    <table class="tbl-data">
+      <tr>
+        <th>Student name</th>
+        <th>Class</th>
+        <th>Password</th>
+        <th></th>
+      </tr>
+      {% for student in student_list %}
+        <tr>
+          <td>
+            <a href="{% url 'profiles:student_detail' student.pk %}" class="underline-me">
+              <b>{{ student.name }}</b>
+            </a>
+          </td>
+          <td>{{ student.class_full_name }}</td>
+          <td>*****</td>
+
+          {% if user.is_superuser %}
+            <td class="center-align">
+              <a href="{% url 'profiles:student_edit' student.pk %}">
+                <i class="fas fa-edit"></i>
+              </a>
+            </td>
+          {% else %}
+            <td></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    </table>
+
+    <br />
+    {% include "includes/pagination.html" %}
+  {% else %}
+    <p>No students are found!</p>
+  {% endif %}
+</section>
+{% endblock content %}

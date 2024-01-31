@@ -1,0 +1,147 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - Student
+{% endblock title %}
+
+{% block css %}
+  <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+{% endblock css %}
+
+{% block content %}
+<section class="section section-center">
+
+  <a href="{% url 'profiles:student' %}">&lt; Back to list</a>
+  <div class="normal-separator-20px"></div>
+
+  {% if is_blacklisted %}
+    <ul class="errorlist">
+      <li>
+        This student is blacklisted!
+        <a class="btn btn-primary blacklist" data-id="{{student.pk}}">
+          Remove
+        </a>
+      </li>
+    </ul>
+  {% endif %}
+
+  <p>Student name:</p>
+  <h1>{{ student.name }}</h1>
+  <p>Class: <b>{{ student.class_full_name }}</b></p>
+  {% if user.is_superuser %}
+    <p>Password: <b>{{ student.password }}</b></p>
+  {% else %}
+    <p>Password: <b>*****</b></p>
+  {% endif %}
+
+  <div class="normal-separator-20px"></div>
+
+  {% if user.is_superuser %}
+    <a class="btn btn-danger" href="{% url 'profiles:student_edit' student.pk %}">
+    Edit Student
+    </a>
+  {% endif %}
+
+  <hr class="hr-line ">
+  <h2>Student attendance history</h2>
+  <div class="normal-separator-20px"></div>
+
+  <div class="search-form">
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="selected-month">Filter by month</label>
+
+        <select name="month" id="selected-month">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="submit">
+          Show
+        </button>
+      </div>
+    </form>
+
+    <div class="search-status">
+      <h3>Total classes: <b>{{ total_classes }}</b></h3>
+      <h3>Total present: <b>{{ total_present }}</b></h3>
+      <h3>Preset %: <b>{{ present_percent }}</b></h3>
+    </div>
+  </div>
+
+  {% if attendance_list %}
+    <table class="tbl-data">
+      <tr>
+        <th>Month</th>
+        <th>Date</th>
+        <th>Teachers</th>
+        <th>Subject</th>
+      </tr>
+      {% for attend in attendance_list %}
+        <tr>
+          <td><b>{{ attend.attendance.att_date|date:"F" }}</b></td>
+          <td>{{ attend.attendance.att_date }}</td>
+          <td>
+            {% for teacher_name in attend.attendance.teacher.all %}
+              {{ teacher_name }},
+            {% endfor %}
+          </td>
+          <td>{{ attend.attendance.subject_name }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No attendance is found for given students!</p>
+  {% endif %}
+
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    // Get month name form month number
+    let month_no = $(location).attr('search');
+
+    if(month_no !== '') {
+      // Remove extra text
+      month_no = month_no.replace('?month=', '');
+    }
+    else {
+      let d = new Date();
+      month_no = d.getMonth()+1;
+    }
+    $("#selected-month").val(month_no).change();
+
+    // Remove BlackList Students
+    $(".blacklist").on("click", function () {
+      let student_id = $(this).attr("data-id");
+
+      if (student_id != "") {
+        $.ajax({
+          url: "{% url 'blacklisted:remove_blacklist' %}",
+          type: "GET",
+          data: {
+            student_id: student_id,
+          },
+        }).done(function (response) {
+          location.reload();
+        });
+      }
+    });
+  });
+</script>
+{% endblock content %}
