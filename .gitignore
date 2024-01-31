@@ -13,3 +13,6 @@ credentials.txt
 
 # Admin CSS
 static/admin/
+
+# temporary ignore
+blacklisted/migrations/
