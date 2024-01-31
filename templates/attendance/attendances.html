@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 
 {% load static %}
+{% load get_class_name %}
 
 {% block title %}
   - All Attendances
@@ -68,27 +69,7 @@
     {% if total_attend %}
       {% for record in total_attend %}
       <p>
-        {% if record.class_name == 'BCA1A' %}
-          BCA I Year (Section A):
-        {% elif record.class_name == 'BCA1B' %}
-          BCA I Year (Section B):
-        {% elif record.class_name == 'BCA2' %}
-          BCA II Year:
-        {% elif record.class_name == 'BCA3' %}
-          BCA Final Year:
-        {% elif record.class_name == 'BSC1' %}
-          BSC I Year:
-        {% elif record.class_name == 'BSC2' %}
-          BSC II Year:
-        {% elif record.class_name == 'BSC3' %}
-          BSC Final Year:
-        {% elif record.class_name == 'MSC1' %}
-          MSC I Year:
-        {% elif record.class_name == 'MSC2' %}
-          MSC Final Year:
-        {% else %}
-          No Class:
-        {% endif %}
+        {{ record.class_name|get_class_name }}
         <b>{{ record.total_class }}</b>
       </p>
       {% endfor %}
@@ -112,7 +93,7 @@
           {{ attendance.att_date }}
         </td>
         <td>
-          <a href="{% url 'attendance:attendances_detail' attendance.pk %}">
+          <a href="{% url 'attendance:attendances_detail' attendance.pk %}" class="underline-me">
             {% for teacher_name in attendance.teacher.all %}
               {{ teacher_name }},
             {% endfor %}

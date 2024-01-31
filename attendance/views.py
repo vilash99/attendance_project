@@ -10,7 +10,7 @@ from django.db.models import Q, Count
 from .models import Attendance, Entry
 from profiles.models import Student
 from .forms import AttendanceForm, EntryForm
-from profiles.classes import get_class
+from profiles.classes import get_class, CLASS_NAMES
 from promotion.views import get_random_ads
 
 
@@ -174,6 +174,8 @@ class AttendanceReport(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        context['CLASS_NAMES'] = CLASS_NAMES
 
         tmp_class = self.kwargs.get('class')
         current_month = self.request.GET.get(

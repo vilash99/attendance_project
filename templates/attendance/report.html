@@ -30,16 +30,9 @@
       <div class="search-field">
         <label for="search-text">Select class</label>
         <select name="class" id="class-name">
-          <option value="BCA1A">BCA I Year (Section A)</option>
-          <option value="BCA1B">BCA I Year (Section B)</option>
-          <option value="BCA2">BCA II Year</option>
-          <option value="BCA3">BCA Final Year</option>
-          <option value="BSC1">BSC I Year</option>
-          <option value="BSC2">BSC II Year</option>
-          <option value="BSC3">BSC Final Year</option>
-          <option value="MSC1">MSC I Year</option>
-          <option value="MSC2">MSC Final Year</option>
-          <option value="NONE">Not Available</option>
+          {% for code, name in CLASS_NAMES %}
+            <option value="{{ code }}">{{ name }}</option>
+          {% endfor %}
         </select>
       </div>
       <div class="search-field">
@@ -145,7 +138,7 @@
       dropdown.val(class_name).change();
     }
     else {
-      dropdown.val('NONE').change();
+      dropdown.val('NO_CLASS').change();
     }
 
     // Change month dropdown based on given month

@@ -27,7 +27,7 @@
       {% for teacher in teacher_list %}
         <tr>
           <td>
-            <a href="{% url 'profiles:teacher_detail' teacher.pk %}">
+            <a href="{% url 'profiles:teacher_detail' teacher.pk %}" class="underline-me">
               <b>{{ teacher.name }}</b>
             </a>
           </td>
