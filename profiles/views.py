@@ -109,14 +109,17 @@ class StudentDetailView(LoginRequiredMixin, DetailView):
             percent = '0.00'
 
         # Check if student is blacklisted
-        is_blacklisted = BlackListedStudent.objects.filter(
-            student_id=self.kwargs.get('pk')).exists()
+        try:
+            blacklisted = BlackListedStudent.objects.get(
+                student=self.kwargs.get('pk'))
+        except:
+            blacklisted = None
 
         context['attendance_list'] = attendance_list
         context['total_classes'] = total_classes
         context['total_present'] = total_present
         context['present_percent'] = percent + '%'
-        context['is_blacklisted'] = is_blacklisted
+        context['blacklisted'] = blacklisted
 
         return context
 

@@ -16,13 +16,18 @@
   <a href="{% url 'profiles:student' %}">&lt; Back to list</a>
   <div class="normal-separator-20px"></div>
 
-  {% if is_blacklisted %}
+  {% if blacklisted %}
     <ul class="errorlist">
       <li>
         This student is blacklisted!
         <a class="btn btn-primary blacklist" data-id="{{student.pk}}">
           Remove
         </a>
+      </li>
+      <li>
+        <p>Blacklisted by: <b>{{ blacklisted.teacher }}</b></p>
+        <p>Reason: <b>{{ blacklisted.reason_text }}</b></p>
+        <p>Date: <b>{{ blacklisted.blacklist_date }}</b></p>
       </li>
     </ul>
   {% endif %}

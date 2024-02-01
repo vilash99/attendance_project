@@ -23,5 +23,9 @@ class BlackListedStudent(models.Model):
     def __str__(self):
         return self.student.name
 
+    @property
+    def reason_text(self):
+        return self.get_reason_display()
+
     class Meta:
         verbose_name_plural = "BlackListStudents"

@@ -1,46 +1,31 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect, JsonResponse
-from django.shortcuts import get_object_or_404
-
-from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.http import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
 
 from .models import BlackListedStudent
 from .forms import BlackListStudentForm
-from attendance.models import Entry
-from profiles.models import Student
 
 
-@login_required
-def blacklist_add(request, entry_id, std_id, att_id):
+class BlackListCreateView(LoginRequiredMixin, CreateView):
+    model = BlackListedStudent
     template_name = 'blacklisted/new_blacklist.html'
+    form_class = BlackListStudentForm
 
-    if request.method == 'GET':
-        student = get_object_or_404(Student, id=std_id)
-        form = BlackListStudentForm(initial={'student': student,
-                                             'tmp_name': student})
-        field = form.fields['student']
-        field.widget = field.hidden_widget()
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
 
-        return render(request, template_name, {'form': form})
+        entry_id = self.kwargs.get('entry_id', None)
+        std_id = self.kwargs.get('std_id', None)
 
-    if request.method == 'POST':
-        student = get_object_or_404(Student, id=std_id)
+        kwargs['entry_id'] = entry_id
+        kwargs['std_id'] = std_id
 
-        form = BlackListStudentForm(request.POST, initial={'student': student,
-                                                           'tmp_name': student})
-        field = form.fields['student']
-        field.widget = field.hidden_widget()
+        return kwargs
 
-        if form.is_valid():
-            form.save()
-
-            # Delete entry from attendance entry
-            entry_obj = Entry.objects.get(id=entry_id)
-            entry_obj.delete()
-
-            return HttpResponseRedirect('/attendances/' + str(att_id) + "/")
-
-        return render(request, template_name, {'form': form})
+    def get_success_url(self):
+        att_id = self.kwargs.get('att_id', None)
+        return reverse('attendance:attendances_detail', args=[str(att_id)])
 
 
 def remove_blacklist(request):
