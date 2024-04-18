@@ -215,3 +215,14 @@ footer
 .footer a{
   color: var(--clr-white);
 }
+
+.footer-table {
+  border-collapse: collapse;
+  min-width: 300px;
+  margin: auto;
+}
+
+.footer-table tr td {
+  border: 1px solid var(--clr-white);
+  padding: 1rem 2rem;
+}
