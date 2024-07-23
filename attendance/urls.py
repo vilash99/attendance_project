@@ -2,7 +2,8 @@ from django.urls import path
 
 from .views import (IndexPageView, ClassesView, AttendanceListView,
                     AttendanceDetailView, AttendanceCreateView,
-                    EntryCreateView, SuccessPageView, AttendanceReport, end_attendance)
+                    EntryCreateView, SuccessPageView, AttendanceReport, DeleteAttendance,
+                    end_attendance)
 
 app_name = 'attendance'
 
@@ -23,4 +24,6 @@ urlpatterns = [
     path('end_attendance/', end_attendance, name='end_attendance'),
 
     path('success/', SuccessPageView.as_view(), name='success'),
+
+    path('attendances/<int:pk>/delete/', DeleteAttendance.as_view(), name='delete_attendance'),
 ]

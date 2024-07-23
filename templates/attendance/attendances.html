@@ -86,6 +86,9 @@
         <th>Unique Code</th>
         <th>Total Students</th>
         <th>Active</th>
+        {% if user.is_superuser %}
+          <th></th>
+        {% endif %}
       </tr>
       {% for attendance in attendance_list %}
       <tr>
@@ -112,6 +115,15 @@
             <img class="active-icon" src="{% static 'admin/img/icon-no.svg' %}" alt="icon-no">
           </td>
         {% endif %}
+
+        {% if user.is_superuser %}
+          <td>
+            <a href="{% url 'attendance:delete_attendance' attendance.id %}" class="danger-text">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        {% endif %}
+
       </tr>
       {% endfor %}
     </table>

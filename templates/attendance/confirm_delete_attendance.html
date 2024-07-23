@@ -1,0 +1,62 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - Confirm Delete Attendance
+{% endblock title %}
+
+{% block content %}
+<section class="section section-center">
+  <a href="{% url 'attendance:attendances' %}">&lt; Back to list</a>
+  <div class="normal-separator-20px"></div>
+
+
+  <div class="inside-container">
+    <div class="section-title">
+      <h2>Delete Attendance</h2>
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+
+      <h3 class="danger-text">Are you sure you want to delete below attendance?</h3>
+      <table class="tbl-data">
+        <tr>
+          <td>Date:</td>
+          <td><b>{{ object.att_date }}</b></td>
+        </tr>
+        <tr>
+          <td>Class:</td>
+          <td><b>{{object.class_full_name}}</b></td>
+        </tr>
+        <tr>
+          <td>Teacher:</td>
+          <td><b>
+            {% for teacher_name in object.teacher.all %}
+              {{ teacher_name }}<br />
+            {% endfor %}
+            </b>
+          </td>
+        </tr>
+        <tr>
+          <td>Subject:</td>
+          <td><b>{{object.subject_name}}</b></td>
+        </tr>
+        <tr>
+          <td>Total students</td>
+          <td><b>{{ object.total_students }}</b></td>
+        </tr>
+        <tr>
+          <td>Unique code</td>
+          <td><b>{{ object.unique_code }}</b></td>
+        </tr>
+      </table>
+
+      <div class="normal-separator-20px"></div>
+
+      <button class="btn btn-danger" type="submit">Delete</button>
+    </form>
+  </div>
+</section>
+{% endblock content %}

@@ -124,7 +124,6 @@
             </td>
             <td>
               {% if attendance.is_active %}
-              </a>
                 <a href="{% url 'blacklisted:blacklist_student' item.id item.student.pk item.attendance.id %}" class="btn btn-danger">
                   BlackList
                 </a>

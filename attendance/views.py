@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, DeleteView
 
 from django.db.models import Q, Count
 
@@ -257,3 +257,9 @@ def end_attendance(request):
             result = "error"
 
     return JsonResponse({'result': result})
+
+
+class DeleteAttendance(LoginRequiredMixin, DeleteView):
+    model = Attendance
+    template_name = 'attendance/confirm_delete_attendance.html'
+    success_url = '/attendances/'
