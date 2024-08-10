@@ -119,6 +119,7 @@ BSC_FINAL_EVEN = (
     ('SQL AND PL/SQL', 'SQL AND PL/SQL'),
 )
 
+
 MSC_I_ODD = (
     ('Artificial Intelligence', 'Artificial Intelligence'),
     ('Compiler Constructions', 'Compiler Construction'),
@@ -141,7 +142,7 @@ MSC_FINAL_ODD = (
     ('Advanced Software Engineering', 'Advanced Software Engineering'),
     ('Network Security', 'Network Security'),
     ('Digital Image Processing', 'Digital Image Processing'),
-    ('Internet of Things (IoT)', 'Internet of Things (IoT)'),
+    ('Computer Graphics', 'Computer Graphics'),
     ('Research Project/Dissertation', 'Research Project/Dissertation'),
     ('Practical', 'Practical'),
 )
