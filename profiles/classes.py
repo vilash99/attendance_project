@@ -141,7 +141,7 @@ MSC_FINAL_ODD = (
     ('Advanced Software Engineering', 'Advanced Software Engineering'),
     ('Network Security', 'Network Security'),
     ('Digital Image Processing', 'Digital Image Processing'),
-    ('MOOC Course', 'MOOC Course'),
+    ('Internet of Things (IoT)', 'Internet of Things (IoT)'),
     ('Research Project/Dissertation', 'Research Project/Dissertation'),
     ('Practical', 'Practical'),
 )
