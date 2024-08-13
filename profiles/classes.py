@@ -92,31 +92,37 @@ BCA_FINAL_EVEN = (
 BSC_I_ODD = (
     ('Programming in C', 'Programming in C'),
     ('Fundamentals of IT', 'Fundamentals of IT'),
+    ('Practical', 'Practical'),
 )
 
 BSC_I_EVEN = (
     ('Programming In C++', 'Programming In C++'),
     ('System Analysis and Design', 'System Analysis and Design'),
+    ('Practical', 'Practical'),
 )
 
 BSC_II_ODD = (
     ('Data Structures', 'Data Structures'),
     ('Operating Systems', 'Operating Systems'),
+    ('Practical', 'Practical'),
 )
 
 BSC_II_EVEN = (
     ('Java Programming', 'Java Programming'),
     ('Linux Operating System', 'Linux Operating System'),
+    ('Practical', 'Practical'),
 )
 
 BSC_FINAL_ODD = (
     ('Visual Basic Programming', 'Visual Basic Programming'),
     ('Database Management System', 'Database Management System'),
+    ('Practical', 'Practical'),
 )
 
 BSC_FINAL_EVEN = (
     ('Compiler Construction', 'Compiler Construction'),
     ('SQL AND PL/SQL', 'SQL AND PL/SQL'),
+    ('Practical', 'Practical'),
 )
 
 

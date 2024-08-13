@@ -39,6 +39,13 @@ class AttendanceForm(forms.ModelForm):
             raise forms.ValidationError(
                 'The attendance for this class is already ACTIVE!')
 
+        teachers = cleaned_data.get('teacher')
+        subject_name = cleaned_data.get('subject_name')
+
+        if teachers.count() > 1 and 'Practical' not in subject_name:
+             raise forms.ValidationError(
+                'Theory class should not have more than one teacher. Are you taking Practical?')
+
         return cleaned_data
 
 
