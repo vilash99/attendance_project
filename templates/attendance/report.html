@@ -1,0 +1,236 @@
+{% extends '_base.html' %}
+
+{% load static %}
+
+{% block title %}
+  - Attendance Report
+{% endblock title %}
+
+{% block css %}
+<style>
+  .tbl-data {
+    font-size: 0.725rem;
+  }
+
+  .tbl-data tr td {
+    padding: 5px;
+  }
+</style>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+{% endblock css %}
+
+{% block content %}
+<section class="section section-center">
+  <div class="section-title">
+    <h2>Attendance report</h2>
+  </div>
+
+  <div class="search-form">
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="search-text">Select class</label>
+        <select name="class" id="class-name">
+          {% for code, name in CLASS_NAMES %}
+            <option value="{{ code }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="button" onclick="showReport()">
+          Show
+        </button>
+      </div>
+    </form>
+
+    <form class="flex-contents" method="get" action="">
+      <div class="search-field">
+        <label for="selected-month">Filter by month</label>
+        <select name="month" id="selected-month">
+          <option value="1">January</option>
+          <option value="2">February</option>
+          <option value="3">March</option>
+          <option value="4">April</option>
+          <option value="5">May</option>
+          <option value="6">June</option>
+          <option value="7">July</option>
+          <option value="8">August</option>
+          <option value="9">September</option>
+          <option value="10">October</option>
+          <option value="11">November</option>
+          <option value="12">December</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <p>&nbsp;</p>
+        <button class="btn btn-normal" type="submit">
+          Show
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="input-icons">
+    <i class="fas fa-search icon"></i>
+    <input type="search" class="search-textfield" name="search-names" id="search-names"
+      oninput="filterName()" placeholder="Search student name"/>
+  </div>
+
+
+  <div class="search-form">
+    <div class="flex-contents">
+      <button class="btn btn-normal" type="button" id="exportAttendance">
+        Export Complete Report
+      </button>
+    </div>
+    <div class="flex-contents">
+        <button class="btn btn-normal" type="button" id="exportPresent">
+        Export Present Report
+      </button>
+    </div>
+  </div>
+
+  <table class="tbl-data" id="report-table">
+    <tr>
+      <th>Student Name</th>
+      <th>Present %</th>
+      <th>Total Classes</th>
+      <th>Total Present</th>
+      {% if attendance_list %}
+        {% for item in attendance_list %}
+          <th>
+            [{{ item.att_date }}]
+            [
+              {{ item.teacher.all|join:" | " }}
+            ]
+            {{ item.subject_name }}
+          </th>
+        {% endfor %}
+      {% endif %}
+    </tr>
+
+    {% if report_dict %}
+      {% for key, value in report_dict.items %}
+        <tr>
+          <td style="min-width: 270px"><b>
+              <a href="{% url 'profiles:student_detail' value.0 %}" class="underline-me">
+                {{ key }}
+              </a>
+            </b>
+          </td>
+
+          {% for item in value|slice:"1:" %}
+            <td style="text-align: center; min-width: 100px">{{ item }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    {% endif %}
+  </table>
+
+</section>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    let class_name = '{{class}}';
+    let dropdown = $("#class-name");
+
+    if (dropdown.find('option[value="' + class_name + '"]').length > 0) {
+      dropdown.val(class_name).change();
+    }
+    else {
+      dropdown.val('NO_CLASS').change();
+    }
+
+    // Change month dropdown based on given month
+    let month_no = $(location).attr('search');
+    if(month_no !== '') {
+      month_no = month_no.replace('?month=', '');
+    }
+    else {
+      let d = new Date();
+      month_no = d.getMonth()+1;
+    }
+    $("#selected-month").val(month_no).change();
+  });
+</script>
+
+
+<script type="text/javascript">
+  function filterName() {
+    let searchKey = document.getElementById("search-names").value;
+    searchKey = searchKey.toLowerCase();
+
+    let myTable = document.getElementById("report-table");
+    let cellData;
+
+    for (var i = 1, row; (row = myTable.rows[i]); i++) {
+      cellData = row.cells[0].innerText;
+      cellData = cellData.toLowerCase();
+
+      if (searchKey == "") {
+        row.classList.remove("hidden-field");
+      } else if (cellData.search(searchKey) >= 0) {
+        row.classList.remove("hidden-field");
+      } else {
+        row.classList.remove("hidden-field");
+        row.classList.add("hidden-field");
+      }
+    }
+  }
+
+  function showReport() {
+    let class_code = $("#class-name option:selected").val();
+    window.location.href = "/attendances/report/" + class_code + "/";
+  }
+
+
+  function exportTableToCSV(filename, totalCols=0) {
+    var table = document.getElementById("report-table");
+
+    // Extract table headers
+    var headers = [];
+    var rows = [];
+    if(totalCols == 0) {
+      totalCols = table.rows[0].cells.length
+    }
+
+    for (var i = 0; i < totalCols; i++) {
+      tmpData = table.rows[0].cells[i].innerText.replace(',', '-')
+      headers.push(tmpData);
+    }
+
+    // Extract table data
+    for (var i = 1; i < table.rows.length; i++) {
+      var row = [];
+      for (var j = 0; j < totalCols; j++) {
+        row.push(table.rows[i].cells[j].innerText);
+      }
+      rows.push(row);
+    }
+
+    // Create CSV data
+    var csvData = "";
+    csvData += headers.join(",") + "\n";
+    for (var i = 0; i < rows.length; i++) {
+      csvData += rows[i].join(",") + "\n";
+    }
+
+    // Create a blob object and download it
+    var blob = new Blob([csvData], { type: "text/csv;charset=utf-8" });
+    var link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename || "data.csv";
+    link.click();
+  }
+
+  // Add event listener to the button
+  document.getElementById("exportAttendance").addEventListener("click", function() {
+    exportTableToCSV("attendance_report.csv");
+  });
+
+   // Add event listener to the button
+  document.getElementById("exportPresent").addEventListener("click", function() {
+    exportTableToCSV("present_report.csv", 4);
+  });
+</script>
+{% endblock content %}
