@@ -1,5 +1,7 @@
 {% extends 'base_public.html' %}
+
 {% load static %}
+{% load time_slot_filters %}
 
 {% block title %}
 Student Attendance
@@ -67,6 +69,16 @@ Student Attendance
           <tr>
             <td>Subject name</td>
             <td><b>{{ attendance.subject_name }}</b></td>
+          </tr>
+
+           <tr>
+            <td>Time slot</td>
+            <td><b>
+              {% if attendance.time_slot.all %}
+                {{ attendance.time_slot.all|time_range }}
+              {% endif %}
+              </b>
+            </td>
           </tr>
         </table>
 

@@ -1,6 +1,7 @@
 {% extends '_base.html' %}
 
 {% load static %}
+{% load time_slot_filters %}
 
 {% block title %}
   - Teacher
@@ -71,6 +72,7 @@
         <th>Date</th>
         <th>Class</th>
         <th>Subject</th>
+        <th>Time Slot</th>
         <th>Total students</th>
       </tr>
       {% for attend in attendance_list %}
@@ -79,6 +81,11 @@
           <td>{{ attend.att_date }}</td>
           <td>{{ attend.class_full_name }}</td>
           <td>{{ attend.subject_name }}</td>
+          <td>
+            {% if attend.time_slot.all %}
+              {{ attend.time_slot.all|time_range }}
+            {% endif %}
+          </td>
           <td>{{ attend.total_students }}</td>
         </tr>
       {% endfor %}

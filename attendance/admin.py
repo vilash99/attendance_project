@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Attendance, Entry
+from .models import Attendance, Entry, TimeSlot
 
 
 class AttendanceAdmin(admin.ModelAdmin):
@@ -11,5 +11,9 @@ class EntryAdmin(admin.ModelAdmin):
     list_display = ('attendance', 'student')
 
 
+class TimeSlotAdmin(admin.ModelAdmin):
+    list_display = ('slot',)
+
 admin.site.register(Attendance, AttendanceAdmin)
 admin.site.register(Entry, EntryAdmin)
+admin.site.register(TimeSlot, TimeSlotAdmin)

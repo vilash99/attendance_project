@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import Q
 
-from .models import Attendance, Entry
+from .models import Attendance, Entry, TimeSlot
 from profiles.models import Teacher, Student
 from blacklisted.models import BlackListedStudent
 from profiles.classes import CLASS_NAMES, get_subjects
@@ -12,13 +12,15 @@ class AttendanceForm(forms.ModelForm):
     teacher = forms.ModelMultipleChoiceField(
         queryset=Teacher.objects.all().order_by('id'), label='Teachers name')
     subject_name = forms.ChoiceField(choices=[])
+    time_slot = forms.ModelMultipleChoiceField(
+        queryset=TimeSlot.objects.all().order_by('id'), label='Time slot')
     total_students = forms.IntegerField(initial=0)
     unique_code = forms.IntegerField(initial=0)
 
     class Meta:
         model = Attendance
         fields = ['class_name', 'teacher', 'subject_name',
-                  'total_students', 'unique_code']
+                  'time_slot', 'total_students', 'unique_code']
 
     def __init__(self, active_class, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -45,6 +47,15 @@ class AttendanceForm(forms.ModelForm):
         if teachers.count() > 1 and 'Practical' not in subject_name:
              raise forms.ValidationError(
                 'Theory class should not have more than one teacher. Are you taking Practical?')
+
+        time_slots = cleaned_data.get('time_slot')
+        if time_slots.count() > 1 and 'Practical' not in subject_name:
+            raise forms.ValidationError(
+                'Theory class should only have one time slot. Are you taking Practical?')
+
+        if time_slots.count() == 1 and 'Practical' in subject_name:
+            raise forms.ValidationError(
+                'Practical class should have more than one time slots. Are you taking Theory?')
 
         return cleaned_data
 

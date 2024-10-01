@@ -6,6 +6,13 @@ from profiles.models import Teacher, Student
 from profiles.classes import *
 
 
+class TimeSlot(models.Model):
+    slot = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.slot
+
+
 class Attendance(models.Model):
     att_date = models.DateField(default=date.today)
     teacher = models.ManyToManyField(Teacher)
@@ -14,6 +21,7 @@ class Attendance(models.Model):
     unique_code = models.IntegerField(default=0)
     total_students = models.IntegerField(default=0)
     is_active = models.BooleanField(default=True)
+    time_slot = models.ManyToManyField(TimeSlot)
 
     def __str__(self):
         return str(self.att_date) + ' ' + self.subject_name

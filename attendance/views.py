@@ -65,7 +65,7 @@ class AttendanceListView(LoginRequiredMixin, ListView):
             qs = Attendance.objects.filter(
                 att_date__month=current_month)
 
-        return qs.order_by('-att_date')
+        return qs.order_by('-id', '-att_date')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
