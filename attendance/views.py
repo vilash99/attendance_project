@@ -24,17 +24,17 @@ class ClassesView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Show all active attendance all classes
-        active_bca = Attendance.objects.filter(
-            Q(class_name__contains='BCA') & Q(is_active=True)).order_by('class_name')
-        active_bsc = Attendance.objects.filter(
-            Q(class_name__contains='BSC') & Q(is_active=True)).order_by('class_name')
-        active_msc = Attendance.objects.filter(
-            Q(class_name__contains='MSC') & Q(is_active=True)).order_by('class_name')
+        # Filter all active attendance by class name and status
+        class_filters = {
+            'active_bca': 'BCA',
+            'active_bsc': 'BSC',
+            'active_msc': 'MSC',
+        }
 
-        context['active_bca'] = active_bca
-        context['active_bsc'] = active_bsc
-        context['active_msc'] = active_msc
+        for key, class_name in class_filters.items():
+            context[key] = Attendance.objects.filter(
+                class_name__icontains=class_name, is_active=True
+            ).order_by('class_name')
 
         return context
 
@@ -51,34 +51,34 @@ class AttendanceListView(LoginRequiredMixin, ListView):
         return qs.urlencode()
 
     def get_queryset(self):
-        # Search attendance
+        """Filters queryset based on search text or selected month."""
         search_txt = self.request.GET.get('q', '')
+        current_month = int(self.request.GET.get('month', datetime.today().month))
 
-        # Get selected month name
-        current_month = self.request.GET.get('month', datetime.today().month)
+        queryset = Attendance.objects.all()
 
         if search_txt:
-            qs = Attendance.objects.filter(
+            queryset = queryset.filter(
                 Q(subject_name__icontains=search_txt) |
-                Q(teacher__name__icontains=search_txt)).distinct()
+                Q(teachers__name__icontains=search_txt)
+            ).distinct()
         else:
-            qs = Attendance.objects.filter(
-                att_date__month=current_month)
+            queryset = queryset.filter(att_date__month=current_month)
 
-        return qs.order_by('-id', '-att_date')
+        return queryset.order_by('-id', '-att_date')
 
     def get_context_data(self, **kwargs):
+        """Adds additional context including querystring and total attendance per class."""
         context = super().get_context_data(**kwargs)
-
         query = self.querystring()
         context['query'] = query
 
-        # Show total classes taken on selected month
-        current_month = self.request.GET.get('month', datetime.today().month)
+        current_month = int(self.request.GET.get('month', datetime.today().month))
 
+        # Annotate total classes taken per class for the selected month
         total_attend = Attendance.objects.filter(
-            att_date__month=current_month).values(
-                'class_name').annotate(total_class=Count('id'))
+            att_date__month=current_month
+        ).values('class_name').annotate(total_class=Count('id'))
 
         context['total_attend'] = total_attend
         return context

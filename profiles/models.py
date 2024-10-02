@@ -10,7 +10,7 @@ class Teacher(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('profiles:teacher_detail', args=[str(self.id)])
+        return reverse('profiles:teacher_detail', args=[self.id])
 
 
 class Student(models.Model):
@@ -26,4 +26,4 @@ class Student(models.Model):
         return self.get_class_name_display()
 
     def get_absolute_url(self):
-        return reverse('profiles:student_detail', args=[str(self.id)])
+        return reverse('profiles:student_detail', args=[self.id])

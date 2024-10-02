@@ -1,9 +1,8 @@
 from django.db import models
 from datetime import date
 from django.urls import reverse
-
 from profiles.models import Teacher, Student
-from profiles.classes import *
+from profiles.classes import CLASS_NAMES
 
 
 class TimeSlot(models.Model):
@@ -24,14 +23,14 @@ class Attendance(models.Model):
     time_slot = models.ManyToManyField(TimeSlot)
 
     def __str__(self):
-        return str(self.att_date) + ' ' + self.subject_name
+        return "{} - {}".format(self.att_date, self.subject_name)
 
     @property
     def class_full_name(self):
         return self.get_class_name_display()
 
     def get_absolute_url(self):
-        return reverse('attendance:attendances_detail', args=[str(self.id)])
+        return reverse('attendance:attendances_detail', args=[self.id])
 
 
 class Entry(models.Model):
