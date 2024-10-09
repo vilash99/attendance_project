@@ -429,3 +429,29 @@ ul.errorlist {
   font-weight: 600;
   text-align: left;
 }
+
+
+/* All Attendance page */
+.class-count-flex {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-bottom: 2rem;
+  gap: 5px;
+}
+
+.class-count-flex p {
+  border: 1px solid #d3d3d3;
+  padding: 5px;
+  text-align: center;
+}
+
+.class-count-flex span {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 992px) {
+  .class-count-flex {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

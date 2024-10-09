@@ -66,12 +66,12 @@
     </form>
   </div>
 
-  <div>
+  <div class="class-count-flex">
     {% if total_attend %}
       {% for record in total_attend %}
       <p>
         {{ record.class_name|get_class_name }}:
-        <b>{{ record.total_class }}</b>
+        <span>{{ record.total_class }}</span>
       </p>
       {% endfor %}
     {% endif %}
@@ -85,7 +85,6 @@
         <th>Class</th>
         <th>Subject</th>
         <th>Time slot</th>
-        <th>Unique Code</th>
         <th>Total Students</th>
         <th>Active</th>
         {% if user.is_superuser %}
@@ -113,7 +112,6 @@
           {% endif %}
         </td>
 
-        <td>{{ attendance.unique_code }}</td>
         <td>{{ attendance.total_students }}</td>
         {% if attendance.is_active %}
           <td>

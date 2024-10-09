@@ -1,9 +1,10 @@
+import random
 from django import forms
-from django.db.models import Q
 
 from .models import Attendance, Entry, TimeSlot
 from profiles.models import Teacher, Student
 from blacklisted.models import BlackListedStudent
+
 from profiles.classes import CLASS_NAMES, get_subjects
 
 
@@ -15,27 +16,27 @@ class AttendanceForm(forms.ModelForm):
     time_slot = forms.ModelMultipleChoiceField(
         queryset=TimeSlot.objects.all().order_by('id'), label='Time slot')
     total_students = forms.IntegerField(initial=0)
-    unique_code = forms.IntegerField(initial=0)
 
     class Meta:
         model = Attendance
-        fields = ['class_name', 'teacher', 'subject_name', 'time_slot', 'total_students', 'unique_code']
+        fields = ['class_name', 'teacher', 'subject_name', 'time_slot', 'total_students']
 
     def __init__(self, active_class, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['subject_name'].choices = get_subjects(active_class)
 
+    def generate_unique_code(self):
+        """Generate a unique code."""
+        unique_code = random.randint(100, 10000)
+        return unique_code
+
+
     def clean(self):
         cleaned_data = super().clean()
-        unique_code = cleaned_data.get('unique_code')
         class_name = cleaned_data.get('class_name')
         teacher = cleaned_data.get('teacher')
         subject_name = cleaned_data.get('subject_name')
         time_slot = cleaned_data.get('time_slot')
-
-        # Validate unique code
-        if Attendance.objects.filter(unique_code=unique_code).exists():
-            raise forms.ValidationError('The unique code has already been used!')
 
         # Validate active attendance for the same class
         if Attendance.objects.filter(class_name=class_name, is_active=True).exists():
@@ -53,6 +54,11 @@ class AttendanceForm(forms.ModelForm):
             raise forms.ValidationError('Practical classes should have more than one time slot. Are you taking Theory?')
 
         return cleaned_data
+
+    def save(self, commit=True):
+        # Assign a unique code before saving the instance
+        self.instance.unique_code = self.generate_unique_code()
+        return super().save(commit=commit)
 
 
 
