@@ -37,6 +37,8 @@ class AttendanceForm(forms.ModelForm):
         teacher = cleaned_data.get('teacher')
         subject_name = cleaned_data.get('subject_name')
         time_slot = cleaned_data.get('time_slot')
+        time_slots = cleaned_data.get('time_slot')
+        attendance_date = self.instance.att_date
 
         # Validate active attendance for the same class
         if Attendance.objects.filter(class_name=class_name, is_active=True).exists():
@@ -52,6 +54,12 @@ class AttendanceForm(forms.ModelForm):
 
         if time_slot.count() == 1 and 'Practical' in subject_name:
             raise forms.ValidationError('Practical classes should have more than one time slot. Are you taking Theory?')
+
+        # Check if any of the selected time slots are already used for the same class and date
+        for time_slot in time_slots:
+            if Attendance.objects.filter(class_name=class_name, time_slot=time_slot, att_date=attendance_date).exists():
+                raise forms.ValidationError('Time slot {} has already been used today.'.format(time_slot))
+
 
         return cleaned_data
 
