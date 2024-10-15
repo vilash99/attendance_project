@@ -15,7 +15,10 @@ class AttendanceForm(forms.ModelForm):
     subject_name = forms.ChoiceField(choices=[])
     time_slot = forms.ModelMultipleChoiceField(
         queryset=TimeSlot.objects.all().order_by('id'), label='Time slot')
-    total_students = forms.IntegerField(initial=0)
+    total_students = forms.IntegerField(
+        initial=0,
+        widget=forms.NumberInput(attrs={'min': '0', 'max': '300'})
+    )
 
     class Meta:
         model = Attendance

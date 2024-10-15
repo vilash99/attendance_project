@@ -23,11 +23,21 @@
     <div class="section-title">
       <h2>Start attendance</h2>
     </div>
-    <form action="" method="post">
+    <form id="attendance-form" action="" method="post" onsubmit="return confirmZeroStudents()">
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-primary" type="submit">Start</button>
     </form>
   </div>
 </section>
+
+<script>
+  function confirmZeroStudents() {
+    const totalStudentsField = document.getElementById("id_total_students");
+    if (totalStudentsField && totalStudentsField.value == "0") {
+      return confirm("You have entered 0 students. Are you sure you want to proceed?");
+    }
+    return true;
+  }
+</script>
 {% endblock content %}
