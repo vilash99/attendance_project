@@ -14,17 +14,12 @@ CLASS_NAMES = (
 )
 
 BCA_I_ODD = (
-    ('Computer Fundamentals', 'Computer Fundamentals'),
-    ('C Programming', 'C Programming'),
-    ('Statistical Methods', 'Statistical Methods'),
-    ('Discrete Mathematics - I', 'Discrete Mathematics - I'),
-    ('Operating Systems', 'Operating Systems'),
+    ('Problem Solving Techniques', 'Problem Solving Techniques'),
+    ('Computer Fundamental and Operating System', 'Computer Fundamental and Operating System'),
     ('Office Automation', 'Office Automation'),
+    ('Web Technology I', 'Web Technology I'),
     ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
     ('English', 'English'),
-    ('Hindi', 'Hindi'),
 )
 
 BCA_I_EVEN = (
