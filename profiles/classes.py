@@ -14,26 +14,28 @@ CLASS_NAMES = (
 )
 
 BCA_I_ODD = (
-    ('Problem Solving Techniques', 'Problem Solving Techniques'),
-    ('Computer Fundamental and Operating System', 'Computer Fundamental and Operating System'),
-    ('Office Automation', 'Office Automation'),
-    ('Web Technology I', 'Web Technology I'),
-    ('Practical I', 'Practical I'),
-    ('English', 'English'),
+    ('DSC-I: Problem Solving Techniques with C & C++', 'DSC-I: Problem Solving Techniques with C & C++'),
+    ('DSC-II: Computer Fundamentals & Operating System', 'DSC-II: Computer Fundamentals & Operating System'),
+    ('DSC-I: Practical', 'DSC-I: Practical'),
+    ('VSC: Office Automation', 'VSC: Office Automation'),
+    ('SEC: Web Technology-I', 'SEC: Web Technology-I'),
+    ('GE/OE-I: Quantitative Aptitude', 'GE/OE-I: Quantitative Aptitude'),
+    ('GE/OE-II: Basic Statistics', 'GE/OE-II: Basic Statistics'),
+    ('AEC: English Compulsory', 'AEC: English Compulsory'),
+    ('VEC: Environmental Science', 'VEC: Environmental Science'),
 )
 
 BCA_I_EVEN = (
-    ('Programming In C++', 'Programming In C++'),
-    ('System Analysis and Design', 'System Analysis and Design'),
-    ('Numerical Methods', 'Numerical Methods'),
-    ('Discrete Mathematics - II', 'Discrete Mathematics - II'),
-    ('Linux Operating System', 'Linux Operating System'),
-    ('E-Commerce', 'E-Commerce'),
-    ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
-    ('English', 'English'),
-    ('Hindi', 'Hindi'),
+    ('DSC-I: Object Oriented Programming using JAVA', 'DSC-I: Object Oriented Programming using JAVA'),
+    ('DSC-II: Database Management System', 'DSC-II: Database Management System'),
+    ('DSC-I: Practical', 'DSC-I: Practical'),
+    ('VSC: Computer Animation', 'VSC: Computer Animation'),
+    ('SEC: Web Technology-I', 'SEC: Web Technology-In'),
+    ('GE/OE-I: Quantitative Aptitude', 'GE/OE-I: Quantitative Aptitude'),
+    ('GE/OE-II: Basic Statistics', 'GE/OE-II: Basic Statistics'),
+    ('AEC: Hindi', 'AEC: Hindi'),
+    ('AEC: Marathi', 'AEC: Marathi'),
+    ('VEC: Constitution of India', 'VEC: Constitution of India'),
 )
 
 BCA_II_ODD = (
