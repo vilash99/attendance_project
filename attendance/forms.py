@@ -48,21 +48,21 @@ class AttendanceForm(forms.ModelForm):
             raise forms.ValidationError('Attendance for this class is already ACTIVE!')
 
         # Ensure only one teacher for theory classes
-        if teacher.count() > 1 and 'Practical' not in subject_name:
+        if teacher.count() > 1 and any(keyword in subject_name for keyword in ['Practical', 'VSC:', 'SEC:']):
             raise forms.ValidationError('Theory classes should not have more than one teacher. Are you taking Practical?')
 
         # Ensure appropriate number of time slots
-        if time_slot.count() > 1 and 'Practical' not in subject_name:
+        if time_slot.count() > 1 and not any(keyword in subject_name for keyword in ['Practical', 'VSC:', 'SEC:']):
             raise forms.ValidationError('Theory classes should have only one time slot. Are you taking Practical?')
 
-        if time_slot.count() == 1 and 'Practical' in subject_name:
+        # Ensure practical class have more than one time slot
+        if time_slot.count() == 1 and any(keyword in subject_name for keyword in ['Practical', 'VSC:', 'SEC:']):
             raise forms.ValidationError('Practical classes should have more than one time slot. Are you taking Theory?')
 
         # Check if any of the selected time slots are already used for the same class and date
         for time_slot in time_slots:
             if Attendance.objects.filter(class_name=class_name, time_slot=time_slot, att_date=attendance_date).exists():
                 raise forms.ValidationError('Time slot {} has already been used today.'.format(time_slot))
-
 
         return cleaned_data
 
