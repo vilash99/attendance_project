@@ -48,7 +48,7 @@ class AttendanceForm(forms.ModelForm):
             raise forms.ValidationError('Attendance for this class is already ACTIVE!')
 
         # Ensure only one teacher for theory classes
-        if teacher.count() > 1 and any(keyword in subject_name for keyword in ['Practical', 'VSC:', 'SEC:']):
+        if teacher.count() > 1 and not any(keyword in subject_name for keyword in ['Practical', 'VSC:', 'SEC:']):
             raise forms.ValidationError('Theory classes should not have more than one teacher. Are you taking Practical?')
 
         # Ensure appropriate number of time slots
