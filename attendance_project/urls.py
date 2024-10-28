@@ -12,6 +12,7 @@ urlpatterns = [
     path('blacklisted/', include('blacklisted.urls')),
     path('promotion/', include('promotion.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('api/', include('api.urls')),
 
     path('favicon.ico', RedirectView.as_view(
         url=staticfiles_storage.url('images/favicon.ico'))),

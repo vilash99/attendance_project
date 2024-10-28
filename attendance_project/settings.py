@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'profiles.apps.ProfilesConfig',  # For Students, Teachers
     'blacklisted.apps.BlacklistedConfig',  # For Black Listed Students
     'promotion.apps.PromotionConfig',  # For Ads
+    'rest_framework',
+    'api.apps.ApiConfig', # For entry API
 ]
 
 MIDDLEWARE = [
