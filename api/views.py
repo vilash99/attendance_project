@@ -4,6 +4,7 @@ from rest_framework import status
 from attendance.models import Attendance
 from profiles.models import Student
 from .serializers import EntrySerializer
+from attendance.templatetags.time_slot_filters import time_range
 
 
 class EntryCreateView(APIView):
@@ -22,6 +23,11 @@ class EntryCreateView(APIView):
 
             response_data = {
                 'attendance': attendance.id,
+                'attendance_date': attendance.att_date,
+                'class_name': attendance.get_class_name_display(),
+                'teachers': ', '.join([teacher.name for teacher in attendance.teacher.all()]),
+                'subject_name': attendance.subject_name,
+                'time_slot': time_range(attendance.time_slot),
                 'students': [{'id': student.id, 'name': student.name} for student in students],
             }
             return Response(response_data, status=status.HTTP_200_OK)
