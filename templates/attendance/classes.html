@@ -95,7 +95,7 @@
         </h4>
         <br />
 
-        {% for item in active_bsc %}
+        {% for item in active_msc %}
           <a href="{% url 'attendance:attendances_detail' item.pk %}"
           class="btn btn-danger">
             {{item.class_full_name}}
