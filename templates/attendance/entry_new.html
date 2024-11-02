@@ -159,7 +159,7 @@ Student Attendance
           alert("Old password and new password is same!");
         } else {
           $.ajax({
-            url: "{% url 'profiles:change_password' %}",
+            url: "{% url 'profiles:change_password_ajax' %}",
             type: "GET",
             data: {
               student_id: student_id,

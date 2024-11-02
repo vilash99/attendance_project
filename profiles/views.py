@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView
@@ -10,6 +10,9 @@ from django.db.models import Q
 from .models import Teacher, Student
 from attendance.models import Attendance, Entry
 from blacklisted.models import BlackListedStudent
+
+from django.contrib import messages
+from .forms import PasswordChangeFromAPIForm
 
 
 class TeacherListView(LoginRequiredMixin, ListView):
@@ -136,7 +139,7 @@ class StudentUpdateView(LoginRequiredMixin, UpdateView):
     fields = ['name', 'class_name', 'password']
 
 
-def change_password(request):
+def change_password_ajax(request):
     '''Student password changing'''
 
     if request.method == 'GET':
@@ -185,3 +188,29 @@ def faq_page(request):
     Show FAQ for password
     """
     return render(request, 'exception/faq_password.html')
+
+
+def change_password_from_api(request):
+    class_name = request.GET.get('class')
+
+    if not class_name:
+        messages.error(request, "Class name is required.")
+        return redirect(request.path + f"?class={class_name}")
+
+    if request.method == 'POST':
+        form = PasswordChangeFromAPIForm(request.POST, class_name=class_name)
+        if form.is_valid():
+            student = form.cleaned_data['student']
+            new_password = form.cleaned_data['new_password']
+            student.password = new_password
+            student.save()
+            messages.success(request, "Password updated successfully.")
+            return redirect(request.path + f"?class={class_name}")
+    else:
+        form = PasswordChangeFromAPIForm(class_name=class_name)
+
+    return render(request, 'profiles/change_password_from_api.html', {
+        'form': form,
+        'class_name': class_name
+    })
+

@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (TeacherListView, TeacherDetailView, TeacherCreateView,
                     TeacherUpdateView, StudentListView, StudentDetailView,
-                    StudentCreateView, StudentUpdateView, change_password,
-                    faq_page)
+                    StudentCreateView, StudentUpdateView, change_password_ajax,
+                    faq_page, change_password_from_api)
 
 app_name = 'profiles'
 
@@ -21,8 +21,8 @@ urlpatterns = [
     path('student/<int:pk>/edit/',
          StudentUpdateView.as_view(), name='student_edit'),
 
-    path('change_password/', change_password, name='change_password'),
+    path('change_password_ajax/', change_password_ajax, name='change_password_ajax'),
     path('faq_page/', faq_page, name='faq_page'),
-
+    path('change-password/', change_password_from_api, name='change_password_from_api'),
 
 ]

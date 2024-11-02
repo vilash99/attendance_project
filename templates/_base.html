@@ -49,16 +49,16 @@
     <br>
     <table class="footer-table">
       <tr>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BCA1A">BCA I Year A Section</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BCA1B">BCA I Year B Section</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BCA2">BCA II Year</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BCA3">BCA III Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BCA1A">BCA I Year A Section</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BCA1B">BCA I Year B Section</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BCA2">BCA II Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BCA3">BCA III Year</a></td>
       </tr>
       <tr>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BSC1">BSC I Year</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BSC2">BSC II Year</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=BSC3">BSC III Year</a></td>
-        <td><a href="https://bcaattendance.pythonanywhere.com/entry/new/?class=MSC2">MSC II Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BSC1">BSC I Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BSC2">BSC II Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=BSC3">BSC III Year</a></td>
+        <td><a href="{% url 'attendance:entry_new' %}?class=MSC2">MSC II Year</a></td>
       </tr>
     </table>
     <br>
