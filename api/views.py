@@ -62,18 +62,19 @@ class GenerateToken(APIView):
     def post(self, request):
 
         student_id = request.data.get('studentId')
+        password = request.data.get('password')
 
         if not student_id:
             return Response({'status': 'error', 'message': 'studentId is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Retrieve student or return 404 if not found
         try:
-            student = Student.objects.get(id=student_id)
+            student = Student.objects.get(id=student_id, password=password)
         except Student.DoesNotExist:
             student = None
 
         if not student:
-            return Response({'status': 'error', 'message': 'Student not found.'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'status': 'error', 'message': 'Wrong password.'}, status=status.HTTP_404_NOT_FOUND)
 
 
         # Generate a unique token
