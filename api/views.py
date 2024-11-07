@@ -1,6 +1,4 @@
 import uuid
-from django.shortcuts import get_object_or_404
-from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -80,7 +78,11 @@ class GenerateToken(APIView):
 
         # Generate a unique token
         token_value = str(uuid.uuid4())
-        token = Token.objects.create(student=student, token=token_value)
+
+        try:
+            Token.objects.create(student=student, token=token_value)
+        except:
+            return Response({'status': 'error', 'message': 'Error.'}, status=status.HTTP_404_NOT_FOUND)
 
         # Create URL with the token parameter
         url = request.build_absolute_uri(f'/profiles/student/{token_value}/report/')
@@ -91,3 +93,20 @@ class GenerateToken(APIView):
             'message': 'Token generated successfully.',
             'url': url,
         }, status=status.HTTP_201_CREATED)
+
+
+class ClassStudentsView(APIView):
+    def get(self, request):
+        class_name = request.query_params.get('class_name')
+
+        if not class_name:
+            return Response({'error': 'class_name parameter is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Fetch all students in the class
+        students = Student.objects.filter(class_name=class_name).order_by('name')
+
+        response_data = {
+            'students': [{'id': student.id, 'name': student.name} for student in students],
+        }
+
+        return Response(response_data, status=status.HTTP_200_OK)
