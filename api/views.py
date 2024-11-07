@@ -1,7 +1,10 @@
+import uuid
+from django.shortcuts import get_object_or_404
+from datetime import timedelta
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from attendance.models import Attendance
+from attendance.models import Attendance, Token
 from profiles.models import Student
 from .serializers import EntrySerializer
 from attendance.templatetags.time_slot_filters import time_range
@@ -57,3 +60,34 @@ class EntryCreateView(APIView):
             return Response({'error': 'No active attendance found for this class.'}, status=status.HTTP_404_NOT_FOUND)
 
 
+class GenerateToken(APIView):
+    def post(self, request):
+
+        student_id = request.data.get('studentId')
+
+        if not student_id:
+            return Response({'status': 'error', 'message': 'studentId is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Retrieve student or return 404 if not found
+        try:
+            student = Student.objects.get(id=student_id)
+        except Student.DoesNotExist:
+            student = None
+
+        if not student:
+            return Response({'status': 'error', 'message': 'Student not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+
+        # Generate a unique token
+        token_value = str(uuid.uuid4())
+        token = Token.objects.create(student=student, token=token_value)
+
+        # Create URL with the token parameter
+        url = request.build_absolute_uri(f'/profiles/student/{token_value}/report/')
+
+        # Respond with JSON data
+        return Response({
+            'status': 'success',
+            'message': 'Token generated successfully.',
+            'url': url,
+        }, status=status.HTTP_201_CREATED)

@@ -1,8 +1,9 @@
 from django.db import models
-from datetime import date
+from datetime import date, timedelta
 from django.urls import reverse
 from profiles.models import Teacher, Student
 from profiles.classes import CLASS_NAMES
+from django.utils import timezone
 
 
 class TimeSlot(models.Model):
@@ -46,3 +47,12 @@ class Entry(models.Model):
 
     class Meta:
         verbose_name_plural = "Entries"
+
+
+class Token(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    token = models.CharField(max_length=100, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def is_expired(self):
+        return timezone.now() > self.created_at + timedelta(minutes=30)

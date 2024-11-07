@@ -1,0 +1,102 @@
+{% extends 'base_public.html' %}
+
+{% load static %}
+
+{% block title %}
+Student Attendance Report
+{% endblock title %}
+
+{% block css %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock css %}
+
+
+{% block content %}
+<section class="section section-center">
+  <div class="inside-container">
+    <div class="section-title">
+      <h2>Attendance Report</h2>
+    </div>
+
+    <div class="normal-separator-20px"></div>
+
+    <h1>{{ student.name }} - ({{student.class_full_name }})</h1>
+
+    <div class="normal-separator-20px"></div>
+
+    {% if monthly_attendance %}
+      <canvas id="attendanceChart" width="400" height="200"></canvas>
+
+      <script>
+        // Extract data passed from Django context
+        const monthlyData = {{ monthly_attendance|safe }};
+
+        // Prepare labels and data for the chart
+        const labels = monthlyData.map(data => data.month);  // List of month names
+        const attendanceData = monthlyData.map(data => parseFloat(data.present_percent));  // Attendance percentage per month
+
+        // Render the bar chart using Chart.js
+        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Attendance Percentage',
+              data: attendanceData,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',  // Semi-transparent blue
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                  display: true,
+                  text: 'Attendance (%)'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: 'top'
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                      return `${context.parsed.y}%`;  // Add % to tooltip
+                  }
+                }
+              }
+            }
+          }
+        });
+      </script>
+
+    <div class="normal-separator-20px"></div>
+     <table class="tbl-data">
+        <tr>
+          <th>Month</th>
+          <th>Total Classes</th>
+          <th>Total Present</th>
+          <th>Present %</th>
+        </tr>
+        {% for attend in monthly_attendance %}
+          <tr>
+            <td>{{ attend.month }}</td>
+            <td>{{ attend.total_classes }}</td>
+            <td>{{ attend.total_present }}</td>
+            <td>{{ attend.present_percent }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+    {% else %}
+      <p>No attendance is found for given students!</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock content %}

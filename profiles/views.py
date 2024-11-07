@@ -1,14 +1,14 @@
 from datetime import datetime
-from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import JsonResponse, HttpResponseForbidden
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic.edit import CreateView, UpdateView
 
 from django.db.models import Q
 
 from .models import Teacher, Student
-from attendance.models import Attendance, Entry
+from attendance.models import Attendance, Entry, Token
 from blacklisted.models import BlackListedStudent
 
 from django.contrib import messages
@@ -214,3 +214,51 @@ def change_password_from_api(request):
         'class_name': class_name
     })
 
+
+class StudentDetailTokenView(TemplateView):
+    model = Student
+    template_name = 'profiles/student_report_token.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        token = get_object_or_404(Token, token=self.kwargs.get('token'))
+
+        if token.is_expired():
+            return HttpResponseForbidden("Token expired.")
+
+        tmp_student = Student.objects.get(pk=token.student.pk)
+        monthly_attendance = []
+
+        # Loop through each month from July (7) to June (6)
+        for month in range(7, 19):
+            tmp_month = (month if month <= 12 else month - 12)
+
+            # Count total classes for the given month and student's class
+            total_classes = Attendance.objects.filter(
+                Q(class_name=tmp_student.class_name) & Q(att_date__month=tmp_month)
+            ).count()
+
+            # If there are no classes in this month, skip to the next month
+            if total_classes == 0:
+                continue
+
+            # Total present days in the given month
+            attendance_list = Entry.objects.filter(
+                Q(student=tmp_student) & Q(attendance__att_date__month=tmp_month)
+            )
+
+            total_present = attendance_list.count()
+            percent = round((total_present * 100) / total_classes, 2) if total_classes else 0.0
+
+            # Append the data for the current month
+            monthly_attendance.append({
+                'month': datetime(datetime.now().year, month, 1).strftime('%B'),  # Get month name
+                'total_classes': total_classes,
+                'total_present': total_present,
+                'present_percent': f"{percent:.2f}%"
+            })
+
+        # Pass the monthly attendance data to the context
+        context['student'] = tmp_student
+        context['monthly_attendance'] = monthly_attendance
+        return context
