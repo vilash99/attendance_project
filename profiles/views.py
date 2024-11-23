@@ -219,14 +219,21 @@ class StudentDetailTokenView(TemplateView):
     model = Student
     template_name = 'profiles/student_report_token.html'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        # Check token before proceeding to the view
         token = get_object_or_404(Token, token=self.kwargs.get('token'))
 
         if token.is_expired():
             return HttpResponseForbidden("Token expired.")
 
-        tmp_student = Student.objects.get(pk=token.student.pk)
+        self.token = token  # Store the token for use in context
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        tmp_student = Student.objects.get(pk=self.token.student.pk)
         monthly_attendance = []
 
         # Loop through each month from July (7) to June (6)
