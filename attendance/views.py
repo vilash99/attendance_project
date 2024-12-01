@@ -9,7 +9,7 @@ from django.db.models import Q, Count
 
 from .models import Attendance, Entry
 from profiles.models import Student
-from .forms import AttendanceForm, EntryForm
+from .forms import AttendanceForm
 from profiles.classes import get_class, CLASS_NAMES
 from promotion.views import get_random_ads
 
@@ -117,44 +117,44 @@ class AttendanceCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
-class EntryCreateView(CreateView):
+class EntryCreateView(TemplateView):
     model = Entry
     template_name = 'attendance/entry_new.html'
-    form_class = EntryForm
+    # form_class = EntryForm
 
-    def get_initial(self):
-        initial = super().get_initial()
+    # def get_initial(self):
+    #     initial = super().get_initial()
 
-        # Get class name of current attendance
-        self.tmp_class = self.request.GET.get('class', '')
-        self.tmp_class = get_class(self.tmp_class)
+    #     # Get class name of current attendance
+    #     self.tmp_class = self.request.GET.get('class', '')
+    #     self.tmp_class = get_class(self.tmp_class)
 
-        # Check if current class attendance is active
-        try:
-            self.att_obj = Attendance.objects.get(
-                class_name=self.tmp_class, is_active=True)
-        except Attendance.DoesNotExist:
-            self.att_obj = None
-        return initial
+    #     # Check if current class attendance is active
+    #     try:
+    #         self.att_obj = Attendance.objects.get(
+    #             class_name=self.tmp_class, is_active=True)
+    #     except Attendance.DoesNotExist:
+    #         self.att_obj = None
+    #     return initial
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
 
-        kwargs['active_class'] = self.tmp_class
-        kwargs['att_obj'] = self.att_obj
+    #     kwargs['active_class'] = self.tmp_class
+    #     kwargs['att_obj'] = self.att_obj
 
-        return kwargs
+    #     return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
 
-        if self.att_obj:
-            context['attendance'] = self.att_obj
-        else:
-            context['ads'] = get_random_ads()
-            context['not_active'] = 'Attendance is not started by the teacher.'
+    #     if self.att_obj:
+    #         context['attendance'] = self.att_obj
+    #     else:
+    #         context['ads'] = get_random_ads()
+    #         context['not_active'] = 'Attendance is not started by the teacher.'
 
-        return context
+    #     return context
 
 
 class SuccessPageView(TemplateView):

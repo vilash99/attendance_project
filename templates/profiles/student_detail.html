@@ -16,7 +16,7 @@
   <a href="{% url 'profiles:student' %}">&lt; Back to list</a>
   <div class="normal-separator-20px"></div>
 
-  {% if blacklisted %}
+  {% if user.is_superuser and blacklisted %}
     <ul class="errorlist">
       <li>
         This student is blacklisted!

@@ -73,57 +73,57 @@ class AttendanceForm(forms.ModelForm):
 
 
 
-class EntryForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput())
-    unique_code = forms.IntegerField(initial=0)
+# class EntryForm(forms.ModelForm):
+#     password = forms.CharField(widget=forms.PasswordInput())
+#     unique_code = forms.IntegerField(initial=0)
 
-    class Meta:
-        model = Entry
-        fields = ['student', 'password', 'unique_code']
+#     class Meta:
+#         model = Entry
+#         fields = ['student', 'password', 'unique_code']
 
-    def __init__(self, active_class, att_obj, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.active_class = active_class
-        self.att_obj = att_obj
-        self.fields['student'].queryset = Student.objects.filter(class_name=active_class).order_by('name')
+#     def __init__(self, active_class, att_obj, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.active_class = active_class
+#         self.att_obj = att_obj
+#         self.fields['student'].queryset = Student.objects.filter(class_name=active_class).order_by('name')
 
-    def clean(self):
-        cleaned_data = super().clean()
+#     def clean(self):
+#         cleaned_data = super().clean()
 
-        student = cleaned_data.get('student')
-        password = cleaned_data.get('password')
-        unique_code = cleaned_data.get('unique_code')
+#         student = cleaned_data.get('student')
+#         password = cleaned_data.get('password')
+#         unique_code = cleaned_data.get('unique_code')
 
-        # Validate password
-        if password == 'abc123':
-            raise forms.ValidationError('Default password is not allowed! Please change your password.')
+#         # Validate password
+#         if password == 'abc123':
+#             raise forms.ValidationError('Default password is not allowed! Please change your password.')
 
-        # Check if the password matches the student's password
-        if not Student.objects.filter(class_name=self.active_class, name=student, password=password).exists():
-            raise forms.ValidationError('Incorrect password! Please try again.')
+#         # Check if the password matches the student's password
+#         if not Student.objects.filter(class_name=self.active_class, name=student, password=password).exists():
+#             raise forms.ValidationError('Incorrect password! Please try again.')
 
-        # Ensure the student has not already marked attendance
-        if Entry.objects.filter(attendance=self.att_obj, student=student).exists():
-            raise forms.ValidationError('You have already marked attendance for this subject!')
+#         # Ensure the student has not already marked attendance
+#         if Entry.objects.filter(attendance=self.att_obj, student=student).exists():
+#             raise forms.ValidationError('You have already marked attendance for this subject!')
 
-        # Validate unique code
-        if self.att_obj.unique_code != unique_code:
-            raise forms.ValidationError('Incorrect unique code!')
+#         # Validate unique code
+#         if self.att_obj.unique_code != unique_code:
+#             raise forms.ValidationError('Incorrect unique code!')
 
-        # Ensure not exceeding total students
-        total_present = Entry.objects.filter(attendance=self.att_obj).count()
-        if total_present >= self.att_obj.total_students:
-            raise forms.ValidationError('Your attendance is not saved. Because all students have given attendance. Ask the teacher to resolve this issue.')
+#         # Ensure not exceeding total students
+#         total_present = Entry.objects.filter(attendance=self.att_obj).count()
+#         if total_present >= self.att_obj.total_students:
+#             raise forms.ValidationError('Your attendance is not saved. Because all students have given attendance. Ask the teacher to resolve this issue.')
 
-         # Check if the student is blacklisted
-        if BlackListedStudent.objects.filter(student=student).exists():
-            raise forms.ValidationError('You are BLACKLISTED and cannot mark attendance.')
+#          # Check if the student is blacklisted
+#         if BlackListedStudent.objects.filter(student=student).exists():
+#             raise forms.ValidationError('You are BLACKLISTED and cannot mark attendance.')
 
-        return cleaned_data
+#         return cleaned_data
 
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        instance.attendance = self.att_obj
-        if commit:
-            instance.save()
-        return instance
+#     def save(self, commit=True):
+#         instance = super().save(commit=False)
+#         instance.attendance = self.att_obj
+#         if commit:
+#             instance.save()
+#         return instance
