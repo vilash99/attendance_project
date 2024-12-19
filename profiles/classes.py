@@ -14,28 +14,26 @@ CLASS_NAMES = (
 )
 
 BCA_I_ODD = (
-    ('DSC-I: Problem Solving Techniques with C & C++', 'DSC-I: Problem Solving Techniques with C & C++'),
-    ('DSC-II: Computer Fundamentals & Operating System', 'DSC-II: Computer Fundamentals & Operating System'),
-    ('DSC-I: Practical', 'DSC-I: Practical'),
-    ('VSC: Office Automation', 'VSC: Office Automation'),
-    ('SEC: Web Technology-I', 'SEC: Web Technology-I'),
-    ('GE/OE-I: Quantitative Aptitude', 'GE/OE-I: Quantitative Aptitude'),
-    ('GE/OE-II: Basic Statistics', 'GE/OE-II: Basic Statistics'),
+    ('DSC-I: Mathematics Foundation to CS', 'DSC-I: Mathematics Foundation to CS'),
+    ('DSC-II: Basics of Computer Architecture', 'DSC-II: Basics of Computer Architecture'),
+    ('SEC: Problem Solving Techniques with C', 'SEC: Problem Solving Techniques with C'),
     ('AEC: English Compulsory', 'AEC: English Compulsory'),
     ('VEC: Environmental Science', 'VEC: Environmental Science'),
+    ('IKS: Vedic Mathematics', 'IKS: Vedic Mathematics'),
+    ('SEC: Practical I', 'SEC: Practical I'),
+    ('DSC-II: Practical II', 'DSC-II: Practical II'),
 )
 
 BCA_I_EVEN = (
-    ('DSC-I: Object Oriented Programming using JAVA', 'DSC-I: Object Oriented Programming using JAVA'),
+    ('DSC-I: Programming in C++', 'DSC-I: Programming in C++'),
     ('DSC-II: Database Management System', 'DSC-II: Database Management System'),
-    ('DSC-I: Practical', 'DSC-I: Practical'),
-    ('VSC: Computer Animation', 'VSC: Computer Animation'),
-    ('SEC: Web Technology-I', 'SEC: Web Technology-In'),
-    ('GE/OE-I: Quantitative Aptitude', 'GE/OE-I: Quantitative Aptitude'),
-    ('GE/OE-II: Basic Statistics', 'GE/OE-II: Basic Statistics'),
-    ('AEC: Hindi', 'AEC: Hindi'),
-    ('AEC: Marathi', 'AEC: Marathi'),
+    ('SEC-I: Data Structures', 'SEC-I: Data Structures'),
+    ('DSC-III: Operating System and Linux', 'DSC-III: Operating System and Linux'),
+    ('SEC-II: Web Technologies', 'SEC-II: Web Technologies'),
     ('VEC: Constitution of India', 'VEC: Constitution of India'),
+    ('DSC-I: Practical I', 'DSC-I: Practical I'),
+    ('SEC-I: Practical II', 'SEC-I: Practical II'),
+    ('SEC-II: Practical III', 'SEC-II: Practical III'),
 )
 
 BCA_II_ODD = (
