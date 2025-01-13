@@ -259,7 +259,7 @@ class StudentDetailTokenView(TemplateView):
 
             # Append the data for the current month
             monthly_attendance.append({
-                'month': datetime(datetime.now().year, month, 1).strftime('%B'),  # Get month name
+                'month': datetime(datetime.now().year, tmp_month, 1).strftime('%B'),  # Get month name
                 'total_classes': total_classes,
                 'total_present': total_present,
                 'present_percent': f"{percent:.2f}%"
