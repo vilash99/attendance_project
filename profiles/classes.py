@@ -145,7 +145,7 @@ MSC_I_ODD = (
 MSC_I_EVEN = (
     ('Cloud Computing', 'Cloud Computing'),
     ('Machine Learning', 'Machine Learning'),
-    ('MOOC Course', 'MOOC Course'),
+    ('R Programming', 'R Programming'),
     ('Apprenticeship/Mini Project', 'Apprenticeship/Mini Project'),
     ('Practical I', 'Practical I'),
     ('Practical II', 'Practical II'),
@@ -164,7 +164,7 @@ MSC_FINAL_EVEN = (
     ('Big Data Analytics', 'Big Data Analytics'),
     ('Computer Vision', 'Computer Vision'),
     ('Deep Learning', 'Deep Learning'),
-    ('Design and Analysis of Algorithm', 'Design and Analysis of Algorithm'),
+    ('Cyber Forensics', 'Cyber Forensics'),
     ('Research Project/Dissertation', 'Research Project/Dissertation'),
 )
 
