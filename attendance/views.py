@@ -263,3 +263,77 @@ class DeleteAttendance(LoginRequiredMixin, DeleteView):
     model = Attendance
     template_name = 'attendance/confirm_delete_attendance.html'
     success_url = '/attendances/'
+
+
+class AttendanceCompleteReport(TemplateView):
+    template_name = 'attendance/complete_attendance_report.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['CLASS_NAMES'] = CLASS_NAMES
+
+        months = [
+            {"num": "7", "name": "July"},
+            {"num": "8", "name": "August"},
+            {"num": "9", "name": "September"},
+            {"num": "10", "name": "October"},
+            {"num": "11", "name": "November"},
+            {"num": "12", "name": "December"},
+            {"num": "1", "name": "January"},
+            {"num": "2", "name": "February"},
+            {"num": "3", "name": "March"},
+            {"num": "4", "name": "April"},
+            {"num": "5", "name": "May"},
+            {"num": "6", "name": "June"},
+        ]
+
+        tmp_class = self.kwargs.get('class')
+
+        if not tmp_class:
+            return context
+
+        # Get all students of selected class
+        students = Student.objects.filter(class_name=tmp_class).order_by('name')
+        all_students_attendance = []
+
+        for student in students:
+            monthly_attendance = {}
+
+            # Loop through each month from July (7) to June (6)
+            for month in range(7, 19):
+                tmp_month = (month if month <= 12 else month - 12)
+
+                # Count total classes for the given month and student's class
+                total_classes = Attendance.objects.filter(
+                    Q(class_name=student.class_name) & Q(att_date__month=tmp_month)
+                ).count()
+
+                # If there are no classes in this month, skip to the next month
+                if total_classes == 0:
+                    continue
+
+                # Total present days in the given month
+                total_present = Entry.objects.filter(
+                    Q(student=student) & Q(attendance__att_date__month=int(tmp_month))
+                ).count()
+
+                percent = round((total_present * 100) / total_classes, 2) if total_classes else 0.0
+
+                # Append the data for the current month
+                monthly_attendance[tmp_month] = {
+                    # 'total_classes': total_classes,
+                    # 'total_present': total_present,
+                    'present_percent': f"{percent:.2f}%"
+                }
+
+            # Append the student's attendance data to the list
+            all_students_attendance.append({
+                'student': student,
+                'monthly_attendance': monthly_attendance
+            })
+
+        # Pass the attendance data for all students to the context
+        context['all_students_attendance'] = all_students_attendance
+        context['months'] = months
+        return context

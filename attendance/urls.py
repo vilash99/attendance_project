@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views import (IndexPageView, ClassesView, AttendanceListView,
-                    AttendanceDetailView, AttendanceCreateView,
+                    AttendanceDetailView, AttendanceCreateView, AttendanceCompleteReport,
                     EntryCreateView, SuccessPageView, AttendanceReport, DeleteAttendance,
                     end_attendance)
 
@@ -23,4 +23,7 @@ urlpatterns = [
     path('entry/new/', EntryCreateView.as_view(), name='entry_new'),
 
     path('success/', SuccessPageView.as_view(), name='success'),
+
+    path('attendances/complete_report/<str:class>/', AttendanceCompleteReport.as_view(), name='complete_report'),
+    path('attendances/complete_report/', AttendanceCompleteReport.as_view(), name='complete_report'),
 ]
