@@ -265,7 +265,7 @@ class DeleteAttendance(LoginRequiredMixin, DeleteView):
     success_url = '/attendances/'
 
 
-class AttendanceCompleteReport(TemplateView):
+class AttendanceCompleteReport(LoginRequiredMixin, TemplateView):
     template_name = 'attendance/complete_attendance_report.html'
 
     def get_context_data(self, **kwargs):
