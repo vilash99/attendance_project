@@ -24,29 +24,17 @@ BCA_I_ODD = (
     ('DSC-II: Practical II', 'DSC-II: Practical II'),
 )
 
-# TODO: Temporarily enabled
 BCA_I_EVEN = (
-    ('DSC-I: Mathematics Foundation to CS', 'DSC-I: Mathematics Foundation to CS'),
-    ('DSC-II: Basics of Computer Architecture', 'DSC-II: Basics of Computer Architecture'),
-    ('SEC: Problem Solving Techniques with C', 'SEC: Problem Solving Techniques with C'),
-    ('AEC: English Compulsory', 'AEC: English Compulsory'),
-    ('VEC: Environmental Science', 'VEC: Environmental Science'),
-    ('IKS: Vedic Mathematics', 'IKS: Vedic Mathematics'),
-    ('SEC: Practical I', 'SEC: Practical I'),
-    ('DSC-II: Practical II', 'DSC-II: Practical II'),
+    ('DSC-I: Programming in C++', 'DSC-I: Programming in C++'),
+    ('DSC-II: Database Management System', 'DSC-II: Database Management System'),
+    ('SEC-I: Data Structures', 'SEC-I: Data Structures'),
+    ('DSC-III: Operating System and Linux', 'DSC-III: Operating System and Linux'),
+    ('SEC-II: Web Technologies', 'SEC-II: Web Technologies'),
+    ('VEC: Constitution of India', 'VEC: Constitution of India'),
+    ('DSC-I: Practical I', 'DSC-I: Practical I'),
+    ('SEC-I: Practical II', 'SEC-I: Practical II'),
+    ('SEC-II: Practical III', 'SEC-II: Practical III'),
 )
-
-# BCA_I_EVEN = (
-#     ('DSC-I: Programming in C++', 'DSC-I: Programming in C++'),
-#     ('DSC-II: Database Management System', 'DSC-II: Database Management System'),
-#     ('SEC-I: Data Structures', 'SEC-I: Data Structures'),
-#     ('DSC-III: Operating System and Linux', 'DSC-III: Operating System and Linux'),
-#     ('SEC-II: Web Technologies', 'SEC-II: Web Technologies'),
-#     ('VEC: Constitution of India', 'VEC: Constitution of India'),
-#     ('DSC-I: Practical I', 'DSC-I: Practical I'),
-#     ('SEC-I: Practical II', 'SEC-I: Practical II'),
-#     ('SEC-II: Practical III', 'SEC-II: Practical III'),
-# )
 
 BCA_II_ODD = (
     ('Visual Basic Programming', 'Visual Basic Programming'),

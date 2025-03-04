@@ -220,11 +220,6 @@ ul.errorlist {
   flex-direction: column;
 }
 
-.search-field {
-  display: flex;
-  flex-direction: column;
-}
-
 .search-field select {
   width: 200px;
 }
