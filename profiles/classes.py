@@ -36,28 +36,29 @@ BCA_I_EVEN = (
     ('SEC-II: Practical III', 'SEC-II: Practical III'),
 )
 
+
 BCA_II_ODD = (
-    ('Visual Basic Programming', 'Visual Basic Programming'),
-    ('Data Base Management System', 'Data Base Management System'),
-    ('Data Structures', 'Data Structures'),
-    ('Operations Research - I', 'Operations Research - I'),
-    ('Web Technology - I', 'Web Technology - I'),
-    ('Digital Electronics - I', 'Digital Electronics - I'),
-    ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
+    ('DSC-I: Object Oriented Programming using JAVA', 'DSC-I: Object Oriented Programming using JAVA'),
+    ('DSC-II: Probability and Statistics', 'DSC-II: Probability and Statistics'),
+    ('SEC-I: Python Programming', 'SEC-I: Python Programming'),
+    ('DSC-III: Software Engineering', 'DSC-III: Software Engineering'),
+    ('DSC-IV: Basics of Data Analytics using Spreadsheet', 'DSC-IV: Basics of Data Analytics using Spreadsheet'),
+    ('SEC-II: SQL and PL/SQL', 'SEC-I: SQL and PL/SQL'),
+    ('DSC-I: Practical I', 'DSC-I: Practical I'),
+    ('SEC-I: Practical II', 'SEC-I: Practical II'),
+    ('DSC-IV: Practical III', 'DSC-IV: Practical III'),
 )
 
 BCA_II_EVEN = (
-    ('Software Engineering - I', 'Software Engineering - I'),
-    ('SQL and PL/SQL', 'SQL and PL/SQL'),
-    ('Theory of Computation', 'Theory of Computation'),
-    ('Operations Research - II', 'Operations Research - II'),
-    ('Web Technology - II', 'Web Technology - II'),
-    ('Digital Electronics - II', 'Digital Electronics - II'),
-    ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
+    ('DSC-I: Artificial Intelligence', 'DSC-I: Artificial Intelligence'),
+    ('DSC-II: Computer Networks', 'DSC-II: Computer Networks'),
+    ('DSC-III: PHP', 'DSC-III: PHP'),
+    ('DSC-IV: Design and Analysis of Algorithm', 'DSC-IV: Design and Analysis of Algorithm'),
+    ('SEC-I: Data Visualization', 'SEC-I: Data Visualization'),
+    ('VAC: Design Thinking and Innovation', 'VAC: Design Thinking and Innovation'),
+    ('DSC-I: Practical I', 'DSC-I: Practical I'),
+    ('DSC-III: Practical II', 'DSC-III: Practical II'),
+    ('SEC-I: Practical III', 'SEC-I: Practical III'),
 )
 
 BCA_FINAL_ODD = (
@@ -98,13 +99,13 @@ BSC_I_EVEN = (
 
 BSC_II_ODD = (
     ('Data Structures', 'Data Structures'),
-    ('Operating Systems', 'Operating Systems'),
+    ('Linux Operating Systems', 'Linux Operating Systems'),
     ('Practical', 'Practical'),
 )
 
 BSC_II_EVEN = (
     ('Java Programming', 'Java Programming'),
-    ('Linux Operating System', 'Linux Operating System'),
+    ('Software Engineering', 'Software Engineering'),
     ('Practical', 'Practical'),
 )
 

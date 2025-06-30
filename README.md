@@ -86,8 +86,6 @@ Feel free to contribute to the project by submitting bug reports, feature reques
 This project is licensed under the MIT License.
 
 ## Contact me
-If you need any web app similar to this or have new requirements. You can contact me at **vilashdd[at]gmail[com].**
+If you need any web app similar to this or have new requirements. You can contact me at **vdaate[at]gmail[com].**
 
-My website: https://vilashdaate.com/
-
-My blog: https://www.kushalstudy.com/
+My website: https://www.vpktechnologies.com/
