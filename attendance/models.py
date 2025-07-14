@@ -8,9 +8,13 @@ from django.utils import timezone
 
 class TimeSlot(models.Model):
     slot = models.CharField(max_length=50)
+    order = models.IntegerField(default=0)
 
     def __str__(self):
         return self.slot
+
+    class Meta:
+        ordering = ['order']
 
 
 class Attendance(models.Model):

@@ -12,7 +12,7 @@ class EntryAdmin(admin.ModelAdmin):
 
 
 class TimeSlotAdmin(admin.ModelAdmin):
-    list_display = ('slot',)
+    list_display = ('slot', 'order')
 
 class TokenAdmin(admin.ModelAdmin):
     list_display = ('student', 'token', 'created_at')

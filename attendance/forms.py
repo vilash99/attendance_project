@@ -1,10 +1,8 @@
 import random
 from django import forms
 
-from .models import Attendance, Entry, TimeSlot
-from profiles.models import Teacher, Student
-from blacklisted.models import BlackListedStudent
-
+from .models import Attendance, TimeSlot
+from profiles.models import Teacher
 from profiles.classes import CLASS_NAMES, get_subjects
 
 
@@ -14,7 +12,7 @@ class AttendanceForm(forms.ModelForm):
         queryset=Teacher.objects.all().order_by('id'), label='Teachers name')
     subject_name = forms.ChoiceField(choices=[])
     time_slot = forms.ModelMultipleChoiceField(
-        queryset=TimeSlot.objects.all().order_by('id'), label='Time slot')
+        queryset=TimeSlot.objects.all(), label='Time slot')
     total_students = forms.IntegerField(
         initial=0,
         widget=forms.NumberInput(attrs={'min': '0', 'max': '300'})
