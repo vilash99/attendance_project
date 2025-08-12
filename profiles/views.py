@@ -81,6 +81,7 @@ class StudentListView(LoginRequiredMixin, ListView):
 
         query = self.querystring()
         context['query'] = query
+        context['search_txt'] = self.request.GET.get('q', '')
 
         return context
 

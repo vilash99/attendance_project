@@ -6,7 +6,7 @@ CLASS_NAMES = (
     ('BCA1B', 'BCA I Year (Section B)'),
     ('BCA2', 'BCA II Year'),
     ('BCA3', 'BCA Final Year'),
-    ('BSC1', 'BSC I Year'),
+    ('BSC1', 'BSC I + II (Minor) Year'),
     ('BSC2', 'BSC II Year'),
     ('BSC3', 'BSC Final Year'),
     ('MSC1', 'MSC I Year'),

@@ -60,7 +60,7 @@ class AttendanceListView(LoginRequiredMixin, ListView):
         if search_txt:
             queryset = queryset.filter(
                 Q(subject_name__icontains=search_txt) |
-                Q(teachers__name__icontains=search_txt)
+                Q(teacher__name__icontains=search_txt)
             ).distinct()
         else:
             queryset = queryset.filter(att_date__month=current_month)
@@ -81,6 +81,8 @@ class AttendanceListView(LoginRequiredMixin, ListView):
         ).values('class_name').annotate(total_class=Count('id'))
 
         context['total_attend'] = total_attend
+        context['search_txt'] = self.request.GET.get('q', '')
+
         return context
 
 
