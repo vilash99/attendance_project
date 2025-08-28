@@ -27,6 +27,11 @@
       {% csrf_token %}
       {{ form.as_p }}
       <button class="btn btn-primary" type="submit">Start</button>
+
+      <p class="danger-text">
+        Note: Add exact <u>Total students</u> number, because attendance will not end
+        until total and present students do not matched!
+      </p>
     </form>
   </div>
 </section>

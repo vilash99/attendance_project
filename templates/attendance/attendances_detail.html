@@ -97,7 +97,7 @@
 
       <div class="card-flex">
         <div class="status-count">
-          <div class="status-value">{{ entries|length }}</div>
+          <div class="status-value" id="totalPresent">{{ entries|length }}</div>
           <div class="status-label">REPLIED</div>
         </div>
 
@@ -105,7 +105,7 @@
 
         <div class="status-count">
           {% if attendance %}
-            <div class="status-value">{{ attendance.total_students }}</div>
+            <div class="status-value" id="totalStudents">{{ attendance.total_students }}</div>
           {% else %}
             <div class="status-value">--</div>
           {% endif %}
@@ -160,6 +160,15 @@
       // End Attendance
       $("#btnEnd").on("click", function () {
         let att_id = $("#btnEnd").attr("data-id");
+
+        const totalPresent = parseInt($("#totalPresent").text());
+        const totalStudents = parseInt($("#totalStudents").text());
+        const difference = totalStudents - totalPresent
+
+        if (difference >= 3) {
+          alert(`Total ${difference} students did not mark their attendance. Unable to end!`);
+          return;
+        }
 
         if (att_id != "") {
           $.ajax({
