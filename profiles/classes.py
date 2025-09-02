@@ -43,7 +43,7 @@ BCA_II_ODD = (
     ('SEC-I: Python Programming', 'SEC-I: Python Programming'),
     ('DSC-III: Software Engineering', 'DSC-III: Software Engineering'),
     ('DSC-IV: Basics of Data Analytics using Spreadsheet', 'DSC-IV: Basics of Data Analytics using Spreadsheet'),
-    ('SEC-II: SQL and PL/SQL', 'SEC-I: SQL and PL/SQL'),
+    ('SEC-II: Practical SQL and PL/SQL', 'SEC-II: Practical SQL and PL/SQL'),
     ('DSC-I: Practical I', 'DSC-I: Practical I'),
     ('SEC-I: Practical II', 'SEC-I: Practical II'),
     ('DSC-IV: Practical III', 'DSC-IV: Practical III'),
