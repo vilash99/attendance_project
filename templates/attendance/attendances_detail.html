@@ -161,15 +161,6 @@
       $("#btnEnd").on("click", function () {
         let att_id = $("#btnEnd").attr("data-id");
 
-        const totalPresent = parseInt($("#totalPresent").text());
-        const totalStudents = parseInt($("#totalStudents").text());
-        const difference = totalStudents - totalPresent
-
-        if (difference >= 3) {
-          alert(`Total ${difference} students did not mark their attendance. Unable to end!`);
-          return;
-        }
-
         if (att_id != "") {
           $.ajax({
             url: "{% url 'attendance:end_attendance' %}",
