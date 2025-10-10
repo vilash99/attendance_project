@@ -40,6 +40,8 @@
   {% else %}
     <p>Password: <b>*****</b></p>
   {% endif %}
+  <p>Email: <b>{{ student.email|default:'-' }}</b></p>
+  <p>Phone: <b>{{ student.phone|default:'-' }}</b></p>
 
   <div class="normal-separator-20px"></div>
 

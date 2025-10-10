@@ -137,7 +137,7 @@ class StudentCreateView(LoginRequiredMixin, CreateView):
 class StudentUpdateView(LoginRequiredMixin, UpdateView):
     model = Student
     template_name = 'profiles/student_edit.html'
-    fields = ['name', 'class_name', 'password']
+    fields = ['name', 'class_name', 'password', 'email', 'phone']
 
 
 def change_password_ajax(request):
