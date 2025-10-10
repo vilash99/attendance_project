@@ -1,5 +1,6 @@
 # Virtual Environment
 .attendance_venv/
+.venv/
 
 # Environment variable
 .env

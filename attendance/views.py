@@ -2,7 +2,7 @@ import math
 from datetime import datetime
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse, HttpResponseForbidden
+from django.http import JsonResponse
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, DetailView
