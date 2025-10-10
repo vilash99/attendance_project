@@ -1,6 +1,9 @@
+import math
 from datetime import datetime
+from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView
@@ -9,7 +12,7 @@ from django.db.models import Q, Count
 
 from .models import Attendance, Entry
 from profiles.models import Student
-from .forms import AttendanceForm
+from .forms import AttendanceForm, EntryForm
 from profiles.classes import get_class, CLASS_NAMES
 from promotion.views import get_random_ads
 
@@ -119,44 +122,62 @@ class AttendanceCreateView(LoginRequiredMixin, CreateView):
         return kwargs
 
 
-class EntryCreateView(TemplateView):
+class EntryCreateView(CreateView):
     model = Entry
     template_name = 'attendance/entry_new.html'
-    # form_class = EntryForm
+    form_class = EntryForm
+    success_url = reverse_lazy('attendance:success')
 
-    # def get_initial(self):
-    #     initial = super().get_initial()
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.tmp_class = get_class(request.GET.get('class', ''))
+        try:
+            self.att_obj = Attendance.objects.get(
+                class_name=self.tmp_class, is_active=True
+            )
+        except Attendance.DoesNotExist:
+            self.att_obj = None
 
-    #     # Get class name of current attendance
-    #     self.tmp_class = self.request.GET.get('class', '')
-    #     self.tmp_class = get_class(self.tmp_class)
+        # Defaults in case there's no active attendance
+        self.total_students = 0
+        self.entry_count = 0
+        self.threshold_needed = 0
+        self.can_submit = False
 
-    #     # Check if current class attendance is active
-    #     try:
-    #         self.att_obj = Attendance.objects.get(
-    #             class_name=self.tmp_class, is_active=True)
-    #     except Attendance.DoesNotExist:
-    #         self.att_obj = None
-    #     return initial
+        if self.att_obj:
+            self.total_students = int(self.att_obj.total_students or 0)
+            self.entry_count = Entry.objects.filter(attendance=self.att_obj).count()
+            # minimum entries required to allow showing/submitting the form
+            self.threshold_needed = math.ceil(0.8 * self.total_students) if self.total_students > 0 else 0
+            self.can_submit = (self.entry_count >= self.threshold_needed)
 
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['active_class'] = self.tmp_class
+        kwargs['att_obj'] = self.att_obj
+        return kwargs
 
-    #     kwargs['active_class'] = self.tmp_class
-    #     kwargs['att_obj'] = self.att_obj
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.att_obj:
+            context['attendance'] = self.att_obj
+            context['can_submit'] = self.can_submit
 
-    #     return kwargs
+            if not self.can_submit:
+                context['wait_message'] = (
+                    "Please wait until at least 80% students mark their attendance."
+                )
+        else:
+            context['ads'] = get_random_ads()
+            context['not_active'] = 'Attendance is not started by the teacher.'
+        return context
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-
-    #     if self.att_obj:
-    #         context['attendance'] = self.att_obj
-    #     else:
-    #         context['ads'] = get_random_ads()
-    #         context['not_active'] = 'Attendance is not started by the teacher.'
-
-    #     return context
+    # Optional: block POSTs until the threshold is reached (defense-in-depth)
+    def form_valid(self, form):
+        if not self.can_submit:
+            messages.error(self.request, "You can mark attendance once 80% of students have already submitted.")
+            return self.render_to_response(self.get_context_data(form=form))
+        return super().form_valid(form)
 
 
 class SuccessPageView(TemplateView):

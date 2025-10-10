@@ -44,6 +44,8 @@
         <th>Student name</th>
         <th>Class</th>
         <th>Password</th>
+        <th>Email</th>
+        <th>Phone</th>
         <th></th>
       </tr>
       {% for student in student_list %}
@@ -55,6 +57,9 @@
           </td>
           <td>{{ student.class_full_name }}</td>
           <td>*****</td>
+
+          <td>{{ student.email|default:'-' }}</td>
+          <td>{{ student.phone|default:'-' }}</td>
 
           {% if user.is_superuser %}
             <td class="center-align">
