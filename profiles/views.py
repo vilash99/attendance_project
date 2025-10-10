@@ -72,17 +72,25 @@ class StudentListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Search student
-        search_txt = self.request.GET.get('q', '')
-        qs = Student.objects.filter(name__icontains=search_txt)
+        search_txt = self.request.GET.get('q', '').strip()
+        qs = Student.objects.all()
+
+        if search_txt:
+            qs = qs.filter(
+                Q(name__icontains=search_txt) |
+                Q(class_name__icontains=search_txt) |
+                Q(class_name__in=[
+                    key for key, value in dict(Student._meta.get_field('class_name').choices).items()
+                    if search_txt.lower() in value.lower()
+                ])
+            )
+
         return qs.order_by('name')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        query = self.querystring()
-        context['query'] = query
+        context['query'] = self.querystring()
         context['search_txt'] = self.request.GET.get('q', '')
-
         return context
 
 
