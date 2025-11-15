@@ -171,25 +171,38 @@ def get_class(tmp_cls):
     return 'NO_CLASS'
 
 
-def get_subjects(class_name):
-    # 0 - EVEN, 1 - ODD
-    semester = config('SEMESTER', cast=bool)
+CLASS_SUBJECT_CONFIG = {
+    # BCA
+    'BCA1A': ('BCA_I',      BCA_I_EVEN,      BCA_I_ODD),
+    'BCA1B': ('BCA_I',      BCA_I_EVEN,      BCA_I_ODD),
+    'BCA2':  ('BCA_II',     BCA_II_EVEN,     BCA_II_ODD),
+    'BCA3':  ('BCA_III',    BCA_FINAL_EVEN,  BCA_FINAL_ODD),
 
-    if class_name in ('BCA1A', 'BCA1B'):
-        return BCA_I_ODD if semester else BCA_I_EVEN
-    elif class_name == 'BCA2':
-        return BCA_II_ODD if semester else BCA_II_EVEN
-    elif class_name == 'BCA3':
-        return BCA_FINAL_ODD if semester else BCA_FINAL_EVEN
-    elif class_name == 'BSC1':
-        return BSC_I_ODD if semester else BSC_I_EVEN
-    elif class_name == 'BSC2':
-        return BSC_II_ODD if semester else BSC_II_EVEN
-    elif class_name == 'BSC3':
-        return BSC_FINAL_ODD if semester else BSC_FINAL_EVEN
-    elif class_name == 'MSC1':
-        return MSC_I_ODD if semester else MSC_I_EVEN
-    elif class_name == 'MSC2':
-        return MSC_FINAL_ODD if semester else MSC_FINAL_EVEN
-    else:
+    # BSC
+    'BSC1':  ('BSC_I',      BSC_I_EVEN,      BSC_I_ODD),
+    'BSC2':  ('BSC_II',     BSC_II_EVEN,     BSC_II_ODD),
+    'BSC3':  ('BSC_III',    BSC_FINAL_EVEN,  BSC_FINAL_ODD),
+
+    # MSC
+    'MSC1':  ('MSC_I',      MSC_I_EVEN,      MSC_I_ODD),
+    'MSC2':  ('MSC_II',     MSC_FINAL_EVEN,  MSC_FINAL_ODD),
+}
+
+def get_subjects(class_name: str):
+    """
+    Return subject choices for given class_name
+    based on whether current semester is odd or even.
+
+    Env vars:
+      - flag_name from CLASS_SUBJECT_CONFIG (e.g. 'BCA_I')
+        True  => ODD
+        False => EVEN
+    """
+    cfg = CLASS_SUBJECT_CONFIG.get(class_name)
+    if not cfg:
         return []
+
+    flag_name, even_subjects, odd_subjects = cfg
+    is_odd_semester = config(flag_name, cast=bool)
+
+    return odd_subjects if is_odd_semester else even_subjects
