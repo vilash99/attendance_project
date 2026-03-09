@@ -7,6 +7,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OAS - {% block title %}{% endblock title%}</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/all.css' %}"/>
+    <style>
+      .footer-referral {
+        margin-top: 0.6rem;
+      }
+      .referral-cta {
+        display: inline-block;
+        margin-top: 0.35rem;
+        margin-bottom: 0.5rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #ffcc00, #ff8a00);
+        color: #121212 !important;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: 0 0 0 rgba(255, 138, 0, 0.65);
+        animation: referralPulse 1.6s ease-in-out infinite;
+        text-transform: uppercase;
+      }
+      .referral-cta:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.05);
+      }
+      @keyframes referralPulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 138, 0, 0.65);
+        }
+        70% {
+          box-shadow: 0 0 0 14px rgba(255, 138, 0, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 138, 0, 0);
+        }
+      }
+    </style>
     {% block css %}{% endblock css %}
   </head>
   <body>
@@ -20,7 +54,14 @@
     {% endblock content %}
 
     <footer class="footer">
-      <p>&copy; 2022-2024 Prof. Vilash D. Daate</p>
+      <p class="footer-referral">
+        Want to Earn Extra Money? <br>
+        <a class="referral-cta" href="https://www.vpkphotopick.in/referral" target="_blank" rel="noopener noreferrer">
+          Yes! Tell me
+        </a>
+      </p>
+
+      <p>&copy; 2022-{% now "Y" %} Prof. Vilash D. Daate</p>
     </footer>
   </body>
 </html>
