@@ -8,10 +8,231 @@ Student Attendance Report
 
 {% block css %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .report-popup-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 9999;
+    }
+
+    .report-popup-overlay.is-hidden {
+      display: none;
+    }
+
+    .report-popup-card {
+      width: min(100%, 520px);
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.2rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .report-popup-success {
+      padding: 1.25rem 1.25rem 1.1rem;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+      border: 1px solid #bbf7d0;
+    }
+
+    .report-popup-divider {
+      height: 1px;
+      margin: 1rem 0;
+      background: linear-gradient(90deg, rgba(15, 118, 110, 0), rgba(15, 118, 110, 0.35), rgba(15, 118, 110, 0));
+    }
+
+    .report-popup-offer {
+      padding: 1rem 1.1rem 1.1rem;
+      border-radius: 16px;
+      background: #fff8eb;
+      border: 1px solid #f5d7a1;
+    }
+
+    .report-popup-badges {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.9rem;
+    }
+
+    .report-popup-offer-label {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #9a3412;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .report-popup-offer-optional {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .report-popup-title {
+      margin: 0;
+      color: #14804a;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .report-popup-success .attendance-success-logo {
+      width: 3.25rem;
+      height: 3.25rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .report-popup-subtitle {
+      margin: 0.45rem 0 0;
+      color: #4b5563;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .report-popup-message {
+      margin: 0 0 1.25rem;
+      color: #1f2937;
+      font-size: 0.98rem;
+      line-height: 1.65;
+    }
+
+    .report-popup-highlight {
+      display: block;
+      margin-top: 1rem;
+      color: #b45309;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .report-popup-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .report-popup-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      padding: 0.9rem 1.2rem;
+      border: none;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .report-popup-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .report-popup-btn-primary {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    .report-popup-btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .report-popup-footer {
+      margin: 0;
+      color: #4b5563;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 576px) {
+      .report-popup-card {
+        padding: 1rem;
+      }
+
+      .report-popup-success,
+      .report-popup-offer {
+        padding: 1rem;
+      }
+
+      .report-popup-success .attendance-success-logo {
+        width: 3rem;
+        height: 3rem;
+      }
+
+      .report-popup-badges {
+        gap: 0.45rem;
+      }
+
+      .report-popup-btn {
+        width: 100%;
+      }
+    }
+  </style>
 {% endblock css %}
 
 
 {% block content %}
+<div id="reportPopup" class="report-popup-overlay is-hidden">
+  <div class="report-popup-card" role="dialog" aria-modal="true" aria-labelledby="reportPopupTitle">
+    <div class="report-popup-success">
+      <img src="{% static 'images/attendance-success.png' %}" alt="attendance-success" class="attendance-success-logo"/>
+      <h2 id="reportPopupTitle" class="report-popup-title">Report Generated</h2>
+      <p class="report-popup-subtitle">Your report is ready to view</p>
+    </div>
+
+    <div class="report-popup-divider" aria-hidden="true"></div>
+
+    <div class="report-popup-offer">
+      <div class="report-popup-badges">
+        <div class="report-popup-offer-label">Special Offer</div>
+        <div class="report-popup-offer-optional">Optional</div>
+      </div>
+      <p class="report-popup-message">
+        Friends asking for their photos after events?
+        <br><br>
+        With VPK PhotoPick, they can find only their photos using a selfie - no scrolling, no confusion
+        <span class="report-popup-highlight">Earn &#8377;100 for every referral</span>
+      </p>
+      <div class="report-popup-actions">
+        <a
+          class="report-popup-btn report-popup-btn-primary"
+          href="https://www.vpkphotopick.in/referral"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Start Earning &rarr;
+        </a>
+        <button id="reportPopupClose" type="button" class="report-popup-btn report-popup-btn-secondary">
+          Maybe Later
+        </button>
+      </div>
+      <p class="report-popup-footer">No investment | Takes 2 minutes</p>
+    </div>
+  </div>
+</div>
+
 <section class="section section-center">
   <div class="inside-container">
     <div class="section-title">
@@ -99,4 +320,27 @@ Student Attendance Report
     {% endif %}
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const popup = document.getElementById('reportPopup');
+    const closeButton = document.getElementById('reportPopupClose');
+
+    if (!popup || !closeButton) {
+      return;
+    }
+
+    popup.classList.remove('is-hidden');
+
+    closeButton.addEventListener('click', function () {
+      popup.classList.add('is-hidden');
+    });
+
+    popup.addEventListener('click', function (event) {
+      if (event.target === popup) {
+        popup.classList.add('is-hidden');
+      }
+    });
+  });
+</script>
 {% endblock content %}
