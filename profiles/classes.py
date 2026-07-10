@@ -62,27 +62,26 @@ BCA_II_EVEN = (
 )
 
 BCA_FINAL_ODD = (
-    ('Computer Graphics - I', 'Computer Graphics - I'),
-    ('Compiler Construction', 'Compiler Construction'),
-    ('VB.Net', 'VB.Net'),
-    ('Software Engineering - II', 'Software Engineering - II'),
-    ('PHP - I', 'PHP - I'),
-    ('Data Communication and Network - I', 'Data Communication and Network - I'),
-    ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
+    ('DSE-I: Introduction to Data Science', 'DSE-I: Introduction to Data Science'),
+    ('DSE-II: Time Series Analysis', 'DSE-II: Time Series Analysis'),
+    ('DSE-III: Machine Learning', 'DSE-III: Machine Learning'),
+    ('DSE-IV: Quantitative Techniques', 'DSE-IV: Quantitative Techniques'),
+    ('OJT: Internship/Capstone Project', 'OJT: Internship/Capstone Project'),
+    ('RP: Major Project', 'RP: Major Project'),
+    ('DSE-I: Practical I', 'DSE-I: Practical I'),
+    ('DSE-II: Practical II', 'DSE-II: Practical II'),
+    ('DSE-III: Practical III', 'DSE-III: Practical III'),
 )
 
 BCA_FINAL_EVEN = (
-    ('Computer Graphics - II', 'Computer Graphics - II'),
-    ('Programming in Java', 'Programming in Java'),
-    ('ASP.Net', 'ASP.Net'),
-    ('Software Testing', 'Software Testing'),
-    ('PHP - II', 'PHP - II'),
-    ('Data Communication and Network - II', 'Data Communication and Network - II'),
-    ('Practical I', 'Practical I'),
-    ('Practical II', 'Practical II'),
-    ('Practical III', 'Practical III'),
+    ('DSE-I: Generative AI', 'DSE-I: Generative AI'),
+    ('DSE-II: Big Data Analytics', 'DSE-II: Big Data Analytics'),
+    ('DSE-III: Exploratory Data Analysis', 'DSE-III: Exploratory Data Analysis'),
+    ('AEC: Soft Skills', 'AEC: Soft Skills'),
+    ('RP: Major Project', 'RP: Major Project'),
+    ('DSE-I: Practical I', 'DSE-I: Practical I'),
+    ('DSE-II: Practical II', 'DSE-II: Practical II'),
+    ('DSE-III: Practical III', 'DSE-III: Practical III'),
 )
 
 BSC_I_ODD = (
@@ -110,15 +109,23 @@ BSC_II_EVEN = (
 )
 
 BSC_FINAL_ODD = (
-    ('Visual Basic Programming', 'Visual Basic Programming'),
+    ('Advanced JAVA Programming', 'Advanced JAVA Programming'),
     ('Database Management System', 'Database Management System'),
-    ('Practical', 'Practical'),
+    ('Data Communication and Networks', 'Data Communication and Networks'),
+    ('E-Commerce', 'E-Commerce'),
+    ('Practical I', 'Practical I'),
+    ('Practical II', 'Practical II'),
+    ('Practical III', 'Practical III'),
 )
 
 BSC_FINAL_EVEN = (
-    ('Compiler Construction', 'Compiler Construction'),
+    ('Cyber Security', 'Cyber Security'),
     ('SQL AND PL/SQL', 'SQL AND PL/SQL'),
-    ('Practical', 'Practical'),
+    ('Python Programming', 'Python Programming'),
+    ('ASP.NET', 'ASP.NET'),
+    ('Practical I', 'Practical I'),
+    ('Practical II', 'Practical II'),
+    ('Practical III', 'Practical III'),
 )
 
 
