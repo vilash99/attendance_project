@@ -8,6 +8,7 @@ CLASS_NAMES = (
     ('BCA3', 'BCA Final Year'),
     ('BSC1', 'BSC I Year'),
     ('BSC2', 'BSC II Year'),
+    ('BSC2M', 'BSC II Year Minor'),
     ('BSC3', 'BSC Final Year'),
     ('MSC1', 'MSC I Year'),
     ('MSC2', 'MSC Final Year'),
@@ -165,6 +166,18 @@ MSC_FINAL_EVEN = (
 )
 
 
+BSC_II_MINOR_ODD = (
+    ('Programming in C', 'Programming in C'),
+    ('Fundamentals of IT', 'Fundamentals of IT'),
+)
+
+BSC_II_MINOR_EVEN = (
+    ('Programming In C++', 'Programming In C++'),
+    ('System Analysis and Design', 'System Analysis and Design'),
+)
+
+
+
 def get_class(tmp_cls):
     '''
     Check if given string is matched with classes ID
@@ -180,19 +193,22 @@ def get_class(tmp_cls):
 
 CLASS_SUBJECT_CONFIG = {
     # BCA
-    'BCA1A': ('BCA_I',      BCA_I_EVEN,      BCA_I_ODD),
-    'BCA1B': ('BCA_I',      BCA_I_EVEN,      BCA_I_ODD),
-    'BCA2':  ('BCA_II',     BCA_II_EVEN,     BCA_II_ODD),
-    'BCA3':  ('BCA_III',    BCA_FINAL_EVEN,  BCA_FINAL_ODD),
+    'BCA1A': ('BCA_I',         BCA_I_EVEN,      BCA_I_ODD),
+    'BCA1B': ('BCA_I',         BCA_I_EVEN,      BCA_I_ODD),
+    'BCA2':  ('BCA_II',        BCA_II_EVEN,     BCA_II_ODD),
+    'BCA3':  ('BCA_III',       BCA_FINAL_EVEN,  BCA_FINAL_ODD),
 
     # BSC
-    'BSC1':  ('BSC_I',      BSC_I_EVEN,      BSC_I_ODD),
-    'BSC2':  ('BSC_II',     BSC_II_EVEN,     BSC_II_ODD),
-    'BSC3':  ('BSC_III',    BSC_FINAL_EVEN,  BSC_FINAL_ODD),
+    'BSC1':  ('BSC_I',         BSC_I_EVEN,      BSC_I_ODD),
+    'BSC2':  ('BSC_II',        BSC_II_EVEN,     BSC_II_ODD),
+    'BSC3':  ('BSC_III',       BSC_FINAL_EVEN,  BSC_FINAL_ODD),
+
+    # BSC Minor
+    'BSC2M': ('BSC_II_MINOR',  BSC_II_MINOR_EVEN,   BSC_II_MINOR_ODD),
 
     # MSC
-    'MSC1':  ('MSC_I',      MSC_I_EVEN,      MSC_I_ODD),
-    'MSC2':  ('MSC_II',     MSC_FINAL_EVEN,  MSC_FINAL_ODD),
+    'MSC1':  ('MSC_I',         MSC_I_EVEN,      MSC_I_ODD),
+    'MSC2':  ('MSC_II',        MSC_FINAL_EVEN,  MSC_FINAL_ODD),
 }
 
 def get_subjects(class_name: str):
