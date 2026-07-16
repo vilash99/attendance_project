@@ -113,7 +113,7 @@ BSC_FINAL_ODD = (
     ('Advanced JAVA Programming', 'Advanced JAVA Programming'),
     ('Database Management System', 'Database Management System'),
     ('Data Communication and Networks', 'Data Communication and Networks'),
-    ('E-Commerce', 'E-Commerce'),
+    ('Web Technology (Elective)', 'Web Technology (Elective)'),
     ('Practical I', 'Practical I'),
     ('Practical II', 'Practical II'),
     ('Practical III', 'Practical III'),
