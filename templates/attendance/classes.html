@@ -52,13 +52,17 @@
     <div class="box-heading blue-heading">BSC</div>
     <div class="box-content">
       <a href="{% url 'attendance:attendances_new' %}?class=BSC1" class="btn btn-normal">
-        BSC I + II (Minor) Year
+        BSC I Year
       </a>
       <a href="{% url 'attendance:attendances_new' %}?class=BSC2" class="btn btn-normal">
         BSC II Year
       </a>
       <a href="{% url 'attendance:attendances_new' %}?class=BSC3" class="btn btn-normal">
         BSC Final Year
+      </a>
+
+      <a href="{% url 'attendance:attendances_new' %}?class=BSC2M" class="btn btn-normal">
+        BSC II Year (Minor)
       </a>
 
       {% if active_bsc %}
