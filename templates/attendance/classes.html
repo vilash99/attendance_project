@@ -57,12 +57,11 @@
       <a href="{% url 'attendance:attendances_new' %}?class=BSC2" class="btn btn-normal">
         BSC II Year
       </a>
-      <a href="{% url 'attendance:attendances_new' %}?class=BSC3" class="btn btn-normal">
-        BSC Final Year
-      </a>
-
       <a href="{% url 'attendance:attendances_new' %}?class=BSC2M" class="btn btn-normal">
         BSC II Year (Minor)
+      </a>
+      <a href="{% url 'attendance:attendances_new' %}?class=BSC3" class="btn btn-normal">
+        BSC Final Year
       </a>
 
       {% if active_bsc %}

@@ -169,11 +169,15 @@ MSC_FINAL_EVEN = (
 BSC_II_MINOR_ODD = (
     ('Programming in C', 'Programming in C'),
     ('Fundamentals of IT', 'Fundamentals of IT'),
+    ('Minor I: Practical I', 'Minor I: Practical I'),
+    ('Minor II: Practical II', 'Minor II: Practical II'),
 )
 
 BSC_II_MINOR_EVEN = (
     ('Programming In C++', 'Programming In C++'),
     ('System Analysis and Design', 'System Analysis and Design'),
+    ('Minor I: Practical I', 'Minor I: Practical I'),
+    ('Minor II: Practical II', 'Minor II: Practical II'),
 )
 
 
