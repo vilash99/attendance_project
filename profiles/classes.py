@@ -2,7 +2,7 @@ from decouple import config
 
 CLASS_NAMES = (
     ('NO_CLASS', 'No Class Selected'),
-    ('BCA1A', 'BCA I Year (Section A)'),
+    ('BCA1A', 'BCA I Year'),
     ('BCA1B', 'BCA I Year (Section B)'),
     ('BCA2', 'BCA II Year'),
     ('BCA3', 'BCA Final Year'),
